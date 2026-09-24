@@ -1,524 +1,1501 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Simulasi Ujian Akidah Akhlak Kelas 3 MI</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
-    body { font-family: 'Poppins', sans-serif; }
-    .glass-card { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Petualangan Akidah Akhlak Kelas 3 MI - Kitab Allah & Kalimat Tayyibah</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Canvas Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #ecfdf5 0%, #e0f2fe 50%, #fef3c7 100%);
+            min-height: 100vh;
+        }
+        .font-fredoka {
+            font-family: 'Fredoka', cursive, sans-serif;
+        }
+        .card-shadow {
+            box-shadow: 0 12px 28px -6px rgba(15, 23, 42, 0.12), 0 8px 12px -6px rgba(15, 23, 42, 0.08);
+        }
+        .pop-in {
+            animation: popIn 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+        @keyframes popIn {
+            0% { transform: scale(0.92); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .animate-bounce-gentle {
+            animation: bounceGentle 2s infinite;
+        }
+        @keyframes bounceGentle {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+        .float-bg {
+            animation: float 4s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(2deg); }
+        }
+    </style>
 </head>
-<body class="bg-gradient-to-br from-emerald-500 via-teal-600 to-cyan-700 min-h-screen py-6 px-4">
+<body class="text-slate-800 antialiased flex flex-col min-h-screen">
 
-  <div class="max-w-3xl mx-auto glass-card rounded-2xl shadow-2xl overflow-hidden border border-white/20">
-    
-    <!-- HEADER -->
-    <div class="bg-emerald-800 text-white p-6 text-center relative">
-      <h1 class="text-2xl md:text-3xl font-bold tracking-wide"><i class="fa-solid fa-book-quran mr-2"></i> Petualangan Akidah Akhlak</h1>
-      <p class="text-emerald-200 text-sm mt-1">Simulasi Ujian Akidah Akhlak Kelas 3 MI (25 Soal Interactive)</p>
-    </div>
-
-    <!-- HALAMAN AWAL / START -->
-    <div id="start-screen" class="p-8 text-center space-y-6">
-      <div class="bg-emerald-50 p-6 rounded-xl border border-emerald-200 text-left space-y-3">
-        <h2 class="text-lg font-bold text-emerald-900"><i class="fa-solid fa-circle-info text-emerald-600"></i> Panduan Simulasi:</h2>
-        <ul class="list-disc list-inside text-gray-700 space-y-1 text-sm">
-          <li>Total Soal: <b>25 Nomor</b> (10 PG, 10 Isian Singkat, 5 Uraian/Essay).</li>
-          <li><b>Bahan Bacaan Pendek</b> berada tepat di atas soal untuk dibaca langsung.</li>
-          <li>Setiap kali menjawab, <b>Koreksi dan Pembahasan Lengkap</b> akan langsung muncul!</li>
-          <li>Nilai akhir akan dihitung berdasarkan seluruh jawaban kamu.</li>
-        </ul>
-      </div>
-
-      <div class="max-w-md mx-auto space-y-4">
-        <div>
-          <label class="block text-left text-sm font-semibold text-gray-700 mb-1">Nama Siswa / Peserta:</label>
-          <input type="text" id="student-name" placeholder="Masukkan nama lengkapmu..." class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+    <!-- Top Header Navigation -->
+    <header class="bg-gradient-to-r from-emerald-700 via-teal-700 to-emerald-800 text-white shadow-md sticky top-0 z-50 border-b-4 border-emerald-900">
+        <div class="max-w-4xl mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="showHomeScreen()">
+                <div class="w-11 h-11 bg-emerald-500 rounded-2xl flex items-center justify-center text-2xl shadow-inner border-2 border-emerald-300 text-yellow-300 float-bg">
+                    <i class="fa-solid fa-book-quran"></i>
+                </div>
+                <div>
+                    <h1 class="font-fredoka text-lg md:text-xl font-bold leading-tight tracking-wide text-yellow-300 drop-shadow-sm">Petualangan Akidah Akhlak</h1>
+                    <p class="text-xs text-emerald-100 font-medium">Kelas 3 MI • Bab 1 & Bab 2 (Kisi-Kisi ULIM)</p>
+                </div>
+            </div>
+            
+            <div id="headerStats" class="flex items-center space-x-2 sm:space-x-3 bg-emerald-900/60 backdrop-blur px-3 py-1.5 rounded-2xl border border-emerald-500/50">
+                <div class="text-center px-1.5">
+                    <span class="text-[10px] uppercase font-semibold text-emerald-200 block leading-tight">Siswa</span>
+                    <span id="displayPlayerName" class="font-bold text-xs sm:text-sm text-yellow-200 truncate max-w-[70px] sm:max-w-[110px] inline-block">Ananda</span>
+                </div>
+                <div class="h-6 w-px bg-emerald-600/70"></div>
+                <div class="text-center px-1.5">
+                    <span class="text-[10px] uppercase font-semibold text-emerald-200 block leading-tight">Skor PG</span>
+                    <span id="displayScore" class="font-fredoka font-bold text-base sm:text-lg text-yellow-300">0</span>
+                </div>
+                <button id="bgmToggle" onclick="toggleBGM()" class="w-8 h-8 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white flex items-center justify-center text-xs transition shadow" title="Musik Latar">
+                    <i id="bgmIcon" class="fa-solid fa-music text-slate-300"></i>
+                </button>
+                <button id="soundToggle" onclick="toggleSound()" class="w-8 h-8 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white flex items-center justify-center text-xs transition shadow" title="Efek Suara">
+                    <i id="soundIcon" class="fa-solid fa-volume-high"></i>
+                </button>
+            </div>
         </div>
-        <button onclick="startGame()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3.5 px-6 rounded-xl shadow-lg transition duration-200 transform hover:-translate-y-0.5">
-          Mulai Ujian <i class="fa-solid fa-play ml-2"></i>
-        </button>
-      </div>
-    </div>
+    </header>
 
-    <!-- HALAMAN SOAL -->
-    <div id="quiz-screen" class="hidden p-6 space-y-6">
-      
-      <!-- Status & Progress -->
-      <div class="flex flex-wrap justify-between items-center bg-gray-100 p-4 rounded-xl gap-2 text-sm font-semibold">
-        <span class="text-emerald-800"><i class="fa-solid fa-user text-emerald-600"></i> <span id="display-name"></span></span>
-        <span class="bg-emerald-600 text-white px-3 py-1 rounded-full" id="question-progress">Soal 1 / 25</span>
-        <span class="text-amber-600"><i class="fa-solid fa-star text-amber-500"></i> Skor PG+Isian+Essay: <span id="current-score">0</span></span>
-      </div>
+    <!-- Main Content Container -->
+    <main class="flex-grow max-w-4xl w-full mx-auto p-4 md:p-6 flex flex-col justify-center">
 
-      <!-- KOTAK BAHAN BACAAN (DI ATAS SOAL) -->
-      <div class="bg-amber-50 border-l-4 border-amber-500 p-4 rounded-r-xl shadow-sm">
-        <div class="flex items-center text-amber-800 font-bold mb-1 text-sm uppercase tracking-wider">
-          <i class="fa-solid fa-book-open text-amber-600 mr-2"></i> Bahan Bacaan Ringkas
-        </div>
-        <p id="reading-material" class="text-gray-800 text-sm leading-relaxed italic"></p>
-      </div>
-
-      <!-- KOTAK PERTANYAAN -->
-      <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm space-y-4">
-        <div class="flex items-start gap-3">
-          <span id="type-badge" class="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded-full uppercase">PG</span>
-          <h3 id="question-text" class="font-bold text-gray-800 text-base md:text-lg"></h3>
+        <!-- Global Progress Bar (Quiz Mode Only) -->
+        <div id="progressBarContainer" class="hidden mb-6 bg-white/90 p-3.5 rounded-2xl shadow-sm border border-emerald-200 backdrop-blur">
+            <div class="flex justify-between items-center text-xs font-bold text-emerald-950 mb-2 flex-wrap gap-1">
+                <span id="chapterBadge" class="bg-emerald-100 text-emerald-800 px-3 py-0.5 rounded-full border border-emerald-300">Bab 1: Kitab Allah</span>
+                <span id="typeBadge" class="bg-blue-100 text-blue-800 px-3 py-0.5 rounded-full border border-blue-300">Pilihan Ganda</span>
+                <span id="stageCounter" class="text-emerald-700">Soal 1 dari 25</span>
+            </div>
+            <div class="w-full bg-emerald-100 rounded-full h-3.5 overflow-hidden border border-emerald-200 p-0.5">
+                <div id="progressBar" class="bg-gradient-to-r from-emerald-500 via-teal-500 to-amber-400 h-2.5 rounded-full transition-all duration-500" style="width: 4%"></div>
+            </div>
         </div>
 
-        <!-- FORM JAWABAN PG -->
-        <div id="pg-options" class="space-y-2.5 pt-2"></div>
+        <!-- SCREEN 1: WELCOME & HOME SCREEN -->
+        <section id="welcomeScreen" class="bg-white rounded-3xl p-6 md:p-8 card-shadow border-2 border-emerald-200 text-center pop-in my-auto">
+            <div class="relative w-28 h-28 bg-gradient-to-tr from-emerald-400 via-teal-300 to-amber-200 rounded-full mx-auto mb-5 flex items-center justify-center shadow-lg border-4 border-white animate-bounce-gentle">
+                <span class="text-5xl drop-shadow-md">🕌</span>
+                <div class="absolute -bottom-1 -right-1 bg-yellow-400 text-emerald-950 font-bold text-xs px-2.5 py-0.5 rounded-full border border-white shadow">
+                    Kelas 3 MI
+                </div>
+            </div>
+            
+            <h2 class="font-fredoka text-2xl md:text-4xl text-emerald-950 mb-2 font-bold tracking-wide">Game Akidah Akhlak Interaktif</h2>
+            <p class="text-slate-600 mb-6 max-w-lg mx-auto text-xs md:text-sm leading-relaxed">
+                Pilih mode belajar dan uji pemahamanmu tentang <strong>Bab 1 (Iman Kepada Kitab Allah)</strong> & <strong>Bab 2 (Kalimat Tayyibah Subhanallah & Allahu Akbar)</strong>!
+            </p>
 
-        <!-- FORM JAWABAN ISIAN / ESSAY -->
-        <div id="text-input-container" class="space-y-3 pt-2 hidden">
-          <textarea id="text-answer" rows="3" placeholder="Ketikkan jawabanmu di sini..." class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:outline-none text-sm"></textarea>
-          <button id="submit-text-btn" onclick="submitTextAnswer()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 px-6 rounded-lg text-sm transition">
-            Jawab Soal <i class="fa-solid fa-paper-plane ml-1"></i>
-          </button>
-        </div>
-      </div>
+            <!-- Student Name & Avatar Selection -->
+            <div class="bg-emerald-50/80 p-4 md:p-5 rounded-2xl border border-emerald-200 max-w-md mx-auto mb-6">
+                <div class="mb-4">
+                    <label for="playerNameInput" class="block text-xs font-bold text-emerald-900 uppercase tracking-wider mb-1.5 text-left">Nama Lengkap Siswa:</label>
+                    <div class="relative">
+                        <i class="fa-solid fa-user text-emerald-600 absolute left-3.5 top-3.5"></i>
+                        <input type="text" id="playerNameInput" placeholder="Ketik nama kamu di sini..." class="w-full pl-10 pr-4 py-2.5 rounded-xl border-2 border-emerald-300 focus:border-emerald-500 focus:outline-none font-semibold text-emerald-950 text-sm placeholder-emerald-400 bg-white shadow-sm">
+                    </div>
+                </div>
 
-      <!-- KOTAK PENJELASAN & KOREKSI (LANGSUNG MUNCUL SETELAH MENJAWAB) -->
-      <div id="explanation-box" class="hidden p-5 rounded-xl border shadow-sm transition-all duration-300 space-y-2">
-        <div class="flex items-center font-bold text-base" id="feedback-header"></div>
-        <div class="text-sm space-y-1">
-          <p><span class="font-semibold text-gray-700">Kunci Jawaban / Acuan Tepat:</span> <span id="correct-answer-display" class="font-bold"></span></p>
-          <p><span class="font-semibold text-gray-700">Penjelasan Lengkap:</span> <span id="explanation-text" class="text-gray-600"></span></p>
-        </div>
-        <button onclick="nextQuestion()" class="mt-4 w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 px-4 rounded-lg shadow text-sm transition">
-          Lanjut ke Soal Berikutnya <i class="fa-solid fa-arrow-right ml-1"></i>
-        </button>
-      </div>
+                <div>
+                    <p class="text-xs font-bold text-emerald-900 uppercase tracking-wider mb-2 text-left">Pilih Karakter Siswa:</p>
+                    <div class="flex justify-center space-x-4">
+                        <button onclick="selectAvatar('boy')" id="avatarBoy" class="avatar-btn flex-1 p-2.5 rounded-2xl border-4 border-emerald-500 bg-white shadow-md transition transform hover:scale-105 flex items-center justify-center space-x-2">
+                            <span class="text-3xl">👦🏻</span>
+                            <span class="text-xs font-bold text-emerald-900">Ahmad</span>
+                        </button>
+                        <button onclick="selectAvatar('girl')" id="avatarGirl" class="avatar-btn flex-1 p-2.5 rounded-2xl border-4 border-transparent bg-slate-100 hover:bg-white shadow-sm transition transform hover:scale-105 flex items-center justify-center space-x-2">
+                            <span class="text-3xl">👧🏻</span>
+                            <span class="text-xs font-bold text-emerald-900">Fatimah</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
 
-    </div>
+            <!-- Game Mode Cards Selection -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5 max-w-2xl mx-auto mb-4">
+                <button onclick="startQuizMode()" class="bg-gradient-to-b from-emerald-500 to-emerald-700 hover:from-emerald-600 hover:to-emerald-800 text-white p-4 rounded-2xl shadow-lg border-b-4 border-emerald-900 transition transform hover:-translate-y-1 active:translate-y-0 text-left flex flex-col justify-between group">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center text-xl"><i class="fa-solid fa-clipboard-check"></i></span>
+                        <span class="text-[10px] bg-yellow-300 text-emerald-950 font-bold px-2 py-0.5 rounded-full">25 Soal</span>
+                    </div>
+                    <div>
+                        <h3 class="font-fredoka text-lg font-bold group-hover:text-yellow-200">Tes ULIM Lengkap</h3>
+                        <p class="text-[11px] text-emerald-100 opacity-90">10 PG, 10 Isian, & 5 Uraian</p>
+                    </div>
+                </button>
 
-    <!-- HALAMAN HASIL AKHIR -->
-    <div id="result-screen" class="hidden p-8 text-center space-y-6">
-      <div class="bg-emerald-50 p-6 rounded-2xl border border-emerald-200">
-        <i class="fa-solid fa-award text-amber-500 text-6xl mb-3"></i>
-        <h2 class="text-2xl font-bold text-gray-800">Ujian Selesai!</h2>
-        <p class="text-gray-600 text-sm mt-1">Selamat <span id="final-student-name" class="font-bold text-emerald-800"></span>, kamu telah menyelesaikan semua soal.</p>
-        
-        <div class="mt-6 inline-block bg-white px-8 py-4 rounded-xl shadow-inner border border-emerald-100">
-          <div class="text-xs text-gray-500 font-bold uppercase tracking-wider">Nilai Total Perolehan</div>
-          <div id="final-score" class="text-5xl font-extrabold text-emerald-600 my-1">0</div>
-          <div id="score-predicate" class="text-sm font-semibold text-emerald-800"></div>
-        </div>
-      </div>
+                <button onclick="openStudyMode()" class="bg-gradient-to-b from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 text-white p-4 rounded-2xl shadow-lg border-b-4 border-blue-900 transition transform hover:-translate-y-1 active:translate-y-0 text-left flex flex-col justify-between group">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center text-xl"><i class="fa-solid fa-book-open-reader"></i></span>
+                        <span class="text-[10px] bg-blue-200 text-blue-950 font-bold px-2 py-0.5 rounded-full">Flashcard</span>
+                    </div>
+                    <div>
+                        <h3 class="font-fredoka text-lg font-bold group-hover:text-blue-200">Rangkuman Belajar</h3>
+                        <p class="text-[11px] text-blue-100 opacity-90">Pelajari kisi-kisi sebelum tes</p>
+                    </div>
+                </button>
 
-      <div id="summary-list" class="text-left bg-white p-4 rounded-xl border max-h-60 overflow-y-auto text-xs space-y-2"></div>
+                <button onclick="openMatchingGame()" class="bg-gradient-to-b from-amber-500 to-amber-700 hover:from-amber-600 hover:to-amber-800 text-white p-4 rounded-2xl shadow-lg border-b-4 border-amber-900 transition transform hover:-translate-y-1 active:translate-y-0 text-left flex flex-col justify-between group">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center text-xl"><i class="fa-solid fa-puzzle-piece"></i></span>
+                        <span class="text-[10px] bg-amber-200 text-amber-950 font-bold px-2 py-0.5 rounded-full">Mini Game</span>
+                    </div>
+                    <div>
+                        <h3 class="font-fredoka text-lg font-bold group-hover:text-amber-200">Jodohkan Pasangan</h3>
+                        <p class="text-[11px] text-amber-100 opacity-90">Pasangkan Kitab & Dzikir</p>
+                    </div>
+                </button>
+            </div>
+        </section>
 
-      <div class="flex gap-4">
-        <button onclick="window.print()" class="flex-1 bg-gray-700 hover:bg-gray-800 text-white font-bold py-3 rounded-xl transition text-sm">
-          <i class="fa-solid fa-print mr-1"></i> Cetak Hasil
-        </button>
-        <button onclick="location.reload()" class="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-xl transition text-sm">
-          <i class="fa-solid fa-rotate-right mr-1"></i> Ulangi Simulasi
-        </button>
-      </div>
-    </div>
+        <!-- SCREEN 2: STUDY FLASHCARD MODULE -->
+        <section id="studyScreen" class="hidden bg-white rounded-3xl p-6 md:p-8 card-shadow border-2 border-blue-200 pop-in">
+            <div class="flex items-center justify-between pb-4 mb-4 border-b-2 border-blue-100">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-blue-100 text-blue-700 rounded-2xl flex items-center justify-center font-bold text-xl">
+                        <i class="fa-solid fa-graduation-cap"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-fredoka text-xl md:text-2xl text-blue-950 font-bold">Modul Belajar & Flashcard</h3>
+                        <p class="text-xs text-slate-500">Pelajari ringkasan materi kisi-kisi sebelum memulai tes</p>
+                    </div>
+                </div>
+                <button onclick="showHomeScreen()" class="text-xs font-bold text-blue-600 hover:bg-blue-50 px-3 py-1.5 rounded-xl border border-blue-200 transition">
+                    <i class="fa-solid fa-arrow-left mr-1"></i> Kembali
+                </button>
+            </div>
 
-  </div>
+            <!-- Tab Switcher for Bab 1 & Bab 2 -->
+            <div class="flex space-x-2 mb-6">
+                <button id="tabBab1" onclick="switchStudyTab(1)" class="flex-1 py-2.5 px-4 rounded-xl font-fredoka text-sm font-bold bg-blue-600 text-white shadow border-b-4 border-blue-800 transition">
+                    Bab 1: Kitab-Kitab Allah
+                </button>
+                <button id="tabBab2" onclick="switchStudyTab(2)" class="flex-1 py-2.5 px-4 rounded-xl font-fredoka text-sm font-bold bg-slate-100 text-slate-600 hover:bg-blue-50 border border-slate-200 transition">
+                    Bab 2: Kalimat Tayyibah
+                </button>
+            </div>
 
-  <script>
-    // DATA SOAL LENGKAP (25 NOMOR) SESUAI KISI-KISI AKIDAH AKHLAK
-    const questions = [
-      // --- 10 PILIHAN GANDA (PG) ---
-      {
-        type: 'PG',
-        reading: 'Iman secara bahasa artinya membenarkan (tasdiq). Secara istilah, iman kepada kitab Allah berarti meyakini dengan sepenuh hati bahwa Allah SWT telah menurunkan kitab-kitab-Nya kepada para nabi dan rasul sebagai pedoman hidup manusia.',
-        question: 'Secara bahasa, kata "iman" memiliki arti ...',
-        options: ['A. Membenarkan', 'B. Mengamalkan', 'C. Mendengarkan', 'D. Menuliskan'],
-        answer: 0,
-        explanation: 'Secara bahasa (etimologi), kata iman berasal dari bahasa Arab yang berarti membenarkan (tasdiq), merasa aman, atau tenang.'
-      },
-      {
-        type: 'PG',
-        reading: 'Rukun Iman terdiri dari 6 perkara. Urutannya yaitu: (1) Iman kepada Allah, (2) Iman kepada Malaikat-Malaikat Allah, (3) Iman kepada Kitab-Kitab Allah, (4) Iman kepada Rasul-Rasul Allah, (5) Iman kepada Hari Kiamat, dan (6) Iman kepada Qada dan Qadar.',
-        question: 'Beriman kepada kitab-kitab Allah SWT merupakan rukun iman yang ke- ...',
-        options: ['A. Pertama', 'B. Kedua', 'C. Ketiga', 'D. Keempat'],
-        answer: 2,
-        explanation: 'Iman kepada kitab-kitab Allah merupakan Rukun Iman yang ke-3.'
-      },
-      {
-        type: 'PG',
-        reading: 'Allah SWT menurunkan 4 kitab utama: Taurat kepada Nabi Musa a.s., Zabur kepada Nabi Daud a.s., Injil kepada Nabi Isa a.s., dan Al-Qur\'an kepada Nabi Muhammad SAW.',
-        question: 'Kitab suci Zabur diturunkan oleh Allah SWT kepada Nabi ...',
-        options: ['A. Musa a.s.', 'B. Daud a.s.', 'C. Isa a.s.', 'D. Muhammad SAW'],
-        answer: 1,
-        explanation: 'Kitab Zabur diturunkan kepada Nabi Daud a.s. sebagai petunjuk dan ajaran pujian kepada Allah SWT.'
-      },
-      {
-        type: 'PG',
-        reading: 'Meyakini kitab-kitab Allah SWT adalah kewajiban bagi setiap muslim. Hukum mengimani seluruh kitab-kitab Allah SWT adalah Fardhu \'Ain (wajib bagi setiap individu).',
-        question: 'Hukum bagi setiap umat Islam untuk mengimani kitab-kitab Allah SWT adalah ...',
-        options: ['A. Sunnah', 'B. Wajib (Fardhu \'Ain)', 'C. Makruh', 'D. Mubah'],
-        answer: 1,
-        explanation: 'Setiap umat Islam hukumnya Wajib (Fardhu \'Ain) mempercayai dan meyakini keberadaan kitab-kitab Allah.'
-      },
-      {
-        type: 'PG',
-        reading: 'Kitab Taurat berisi 10 pokok ajaran (Ten Commandments). Di antaranya melarang menyembah berhala, larangan membunuh, larangan mencuri, larangan berbuat zina, serta larangan menjadi saksi palsu.',
-        question: 'Berikut ini yang merupakan larangan dalam pokok isi kitab Taurat adalah ...',
-        options: ['A. Mendirikan shalat lima waktu', 'B. Berpuasa di bulan Ramadan', 'C. Larangan mencuri dan menjadi saksi palsu', 'D. Membayar zakat fitrah'],
-        answer: 2,
-        explanation: 'Pokok ajaran kitab Taurat mencakup larangan mencuri, membunuh, berbuat zina, dan menjadi saksi palsu.'
-      },
-      {
-        type: 'PG',
-        reading: 'Al-Qur\'an diturunkan sebagai penyempurna kitab-kitab sebelumnya dan menjadi petunjuk serta pedoman hidup utama bagi seluruh umat manusia hingga akhir zaman.',
-        question: 'Fungsi utama diturunkannya kitab suci Al-Qur\'an bagi manusia adalah sebagai ...',
-        options: ['A. Hiasan dinding rumah', 'B. BACAAN tanpa dipahami', 'C. Pedoman dan petunjuk hidup', 'D. Buku sejarah kuno saja'],
-        answer: 2,
-        explanation: 'Al-Qur\'an berfungsi sebagai pedoman dan petunjuk (*hudan*) bagi seluruh manusia dalam menjalani kehidupan.'
-      },
-      {
-        type: 'PG',
-        reading: 'Kalimat tayyibah Subhanallah disebut juga bacaan Tasbih, artinya "Maha Suci Allah". Kalimat Allahu Akbar disebut bacaan Takbir, artinya "Allah Maha Besar".',
-        question: 'Kalimat tayyibah "Subhanallah" disebut juga dengan bacaan ...',
-        options: ['A. Tahmid', 'B. Takbir', 'C. Tasbih', 'D. Tahlil'],
-        answer: 2,
-        explanation: 'Subhanallah disebut bacaan Tasbih (mensucikan Allah SWT dari segala kekurangan).'
-      },
-      {
-        type: 'PG',
-        reading: 'Kalimat Tasbih (Subhanallah) diucapkan saat melihat atau mendengar keindahan alam yang luar biasa, menyaksikan keajaiban ciptaan Allah, atau mendengar hal-hal buruk agar teringat kesucian-Nya.',
-        question: 'Waktu yang tepat untuk mengucapkan kalimat "Subhanallah" adalah ketika ...',
-        options: ['A. Melihat keindahan alam ciptaan Allah', 'B. Mengumandangkan Azan', 'C. Mengawali makan', 'D. Mengakhiri doa'],
-        answer: 0,
-        explanation: 'Kalimat Subhanallah diucapkan saat menyaksikan keindahan alam atau keajaiban ciptaan Allah SWT.'
-      },
-      {
-        type: 'PG',
-        reading: 'Kalimat Takbir (Allahu Akbar) diucapkan saat mengumandangkan Azan, Ikamah, dalam gerakan shalat, takbiran hari raya, serta saat melihat kekuasaan Allah yang sangat besar.',
-        question: 'Bacaan "Allahu Akbar" diucapkan pada saat berikut ini, KECUALI ...',
-        options: ['A. Mengumandangkan Azan', 'B. Gerakan takbiratul ihram saat shalat', 'C. Takbiran Hari Raya Idul Fitri', 'D. Masuk ke dalam kamar mandi'],
-        answer: 3,
-        explanation: 'Di dalam kamar mandi kita dilarang menyebut lafal-lafal agung seperti kalimat Takbir.'
-      },
-      {
-        type: 'PG',
-        reading: 'Membiasakan mengucapkan kalimat tayyibah Subhanallah dan Allahu Akbar membuat hati menjadi tenang, menjauhkan diri dari sifat sombong, dan menambah pahala kebaikan.',
-        question: 'Salah satu manfaat mengamalkan kalimat tayyibah Subhanallah dan Allahu Akbar adalah ...',
-        options: ['A. Menjadi sombong', 'B. Memperoleh ketenangan hati dan pahala', 'C. Dipuji oleh banyak orang', 'D. Cepat kaya raya'],
-        answer: 1,
-        explanation: 'Berzikir mengingat Allah dengan kalimat tayyibah menjadikan hati tenang dan mendatangkan pahala.'
-      },
+            <!-- Flashcard Material Display -->
+            <div id="studyContentArea" class="space-y-4 mb-6">
+                <!-- Content injected dynamically -->
+            </div>
 
-      // --- 10 ISIAN SINGKAT ---
-      {
-        type: 'ISIAN',
-        reading: 'Al-Qur\'an adalah kitab suci terakhir yang diturunkan kepada Nabi Muhammad SAW melalui malaikat Jibril secara bertahap.',
-        question: 'Kitab suci Al-Qur\'an diturunkan oleh Allah SWT kepada Nabi ...',
-        keywords: ['muhammad', 'muhammad saw', 'nabi muhammad'],
-        keyDisplay: 'Nabi Muhammad SAW',
-        explanation: 'Al-Qur\'an diturunkan kepada Nabi Muhammad SAW sebagai penutup para nabi.'
-      },
-      {
-        type: 'ISIAN',
-        reading: 'Kitab Taurat diturunkan kepada Nabi Musa a.s. sebagai petunjuk bagi Bani Israil.',
-        question: 'Nabi penerima kitab suci Taurat adalah Nabi ...',
-        keywords: ['musa', 'musa as', 'nabi musa'],
-        keyDisplay: 'Nabi Musa a.s.',
-        explanation: 'Kitab Taurat diturunkan kepada Nabi Musa a.s.'
-      },
-      {
-        type: 'ISIAN',
-        reading: 'Nabi Isa a.s. menerima kitab suci Injil untuk membenarkan ajaran Taurat sebelumnya.',
-        question: 'Kitab suci Injil diturunkan oleh Allah SWT kepada Nabi ...',
-        keywords: ['isa', 'isa as', 'nabi isa'],
-        keyDisplay: 'Nabi Isa a.s.',
-        explanation: 'Kitab Injil diturunkan kepada Nabi Isa a.s.'
-      },
-      {
-        type: 'ISIAN',
-        reading: 'Kalimat "Subhanallah" mengandung arti menyucikan Allah SWT dari segala sifat kekurangan dan cela.',
-        question: 'Arti dari kalimat tayyibah Subhanallah adalah Maha Suci ...',
-        keywords: ['allah', 'allah swt'],
-        keyDisplay: 'Allah',
-        explanation: 'Subhanallah artinya "Maha Suci Allah".'
-      },
-      {
-        type: 'ISIAN',
-        reading: 'Kalimat "Allahu Akbar" mengagungkan nama Allah SWT di atas segala-galanya.',
-        question: 'Arti dari kalimat tayyibah Allahu Akbar adalah Allah Maha ...',
-        keywords: ['besar', 'agung'],
-        keyDisplay: 'Besar',
-        explanation: 'Allahu Akbar artinya "Allah Maha Besar".'
-      },
-      {
-        type: 'ISIAN',
-        reading: 'Panggilan shalat yang dikumandangkan untuk memberitahukan masuknya waktu shalat mengandung banyak bacaan Allahu Akbar.',
-        question: 'Seruan panggilan shalat yang di dalamnya terdapat bacaan Takbir adalah ...',
-        keywords: ['azan', 'adzan', 'iqamah', 'ikamah'],
-        keyDisplay: 'Azan / Ikamah',
-        explanation: 'Azan memuat lafal Allahu Akbar sebanyak 4 kali pada awal seruannya.'
-      },
-      {
-        type: 'ISIAN',
-        reading: 'Kitab Zabur berisi tentang doa, zikir, nasehat, dan puji-pujian kepada Allah SWT.',
-        question: 'Kitab suci Zabur diturunkan kepada Nabi Daud a.s. dalam bahasa ...',
-        keywords: ['qibti', 'qibty', 'suryani'],
-        keyDisplay: 'Qibti',
-        explanation: 'Kitab Zabur ditulis menggunakan bahasa Qibti.'
-      },
-      {
-        type: 'ISIAN',
-        reading: 'Seseorang yang meyakini kitab Allah akan selalu menjadikan Al-Qur\'an sebagai panduan berperilaku sehari-hari.',
-        question: 'Mengamalkan ajaran Al-Qur\'an merupakan contoh kewajiban umat Islam terhadap kitab ...',
-        keywords: ['allah', 'al quran', 'al-quran', 'alquran'],
-        keyDisplay: 'Allah / Al-Qur\'an',
-        explanation: 'Mengamalkan hukum Al-Qur\'an adalah bukti nyata iman kepada kitab Allah.'
-      },
-      {
-        type: 'ISIAN',
-        reading: 'Setelah selesai melaksanakan shalat fardhu, kita disunnahkan membaca Tasbih (Subhanallah) sebanyak 33 kali.',
-        question: 'Bacaan Tasbih (Subhanallah) disunnahkan dibaca sesudah shalat sebanyak ... kali.',
-        keywords: ['33', 'tiga puluh tiga'],
-        keyDisplay: '33 kali',
-        explanation: 'Zikir sesudah shalat membaca Subhanallah 33x, Alhamdulillah 33x, dan Allahu Akbar 33x.'
-      },
-      {
-        type: 'ISIAN',
-        reading: 'Melihat gunung yang menjulang tinggi dan pemandangan alam yang sangat indah membuat kita mengagumi pencipta-Nya.',
-        question: 'Saat melihat pemandangan alam yang sangat indah, kita mengagumi keagungan Allah dengan mengucapkan ...',
-        keywords: ['subhanallah', 'subhanallah / masya allah', 'masyaallah'],
-        keyDisplay: 'Subhanallah / Masya Allah',
-        explanation: 'Melihat keindahan ciptaan Allah disunnahkan mengucapkan Subhanallah.'
-      },
+            <button onclick="startQuizMode()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-fredoka text-lg py-3.5 px-6 rounded-2xl shadow-md border-b-4 border-emerald-800 transition flex items-center justify-center space-x-2">
+                <span>Saya Sudah Paham, Mulai Tes ULIM Sekarang!</span>
+                <i class="fa-solid fa-rocket"></i>
+            </button>
+        </section>
 
-      // --- 5 ESSAY / URAIAN ---
-      {
-        type: 'ESSAY',
-        reading: 'Iman kepada kitab-kitab Allah mencakup empat hal: meyakini keberadaannya, meyakini kitab tersebut dari Allah, mempercayai berita dalam Al-Qur\'an tentang kitab lalu, serta mengamalkan Al-Qur\'an.',
-        question: 'Jelaskan apa yang dimaksud dengan iman kepada kitab-kitab Allah SWT!',
-        keywords: ['percaya', 'yakin', 'pedoman', 'petunjuk', 'rasul', 'allah'],
-        keyDisplay: 'Percaya dan meyakini sepenuh hati bahwa Allah SWT telah menurunkan kitab-kitab-Nya kepada para rasul sebagai pedoman hidup manusia.',
-        explanation: 'Iman kepada kitab Allah berarti meyakini dengan hati, diucapkan dengan lisan, dan dibuktikan dengan perbuatan bahwa kitab Allah adalah petunjuk hidup.'
-      },
-      {
-        type: 'ESSAY',
-        reading: 'Setiap muslim wajib menghormati dan meyakini 4 kitab suci yang pernah Allah turunkan kepada para nabi pilihan-Nya.',
-        question: 'Sebutkan 4 nama kitab suci Allah beserta nama Nabi penerimanya secara urut!',
-        keywords: ['musa', 'daud', 'isa', 'muhammad'],
-        keyDisplay: '1. Taurat (Nabi Musa a.s.) | 2. Zabur (Nabi Daud a.s.) | 3. Injil (Nabi Isa a.s.) | 4. Al-Qur\'an (Nabi Muhammad SAW)',
-        explanation: 'Empat kitab Allah yaitu Taurat (Musa a.s.), Zabur (Daud a.s.), Injil (Isa a.s.), dan Al-Qur\'an (Muhammad SAW).'
-      },
-      {
-        type: 'ESSAY',
-        reading: 'Kitab Taurat diturunkan kepada Nabi Musa a.s. memuat 10 larangan/perintah penting bagi Bani Israil.',
-        question: 'Sebutkan 3 contoh larangan yang terdapat dalam isi pokok kitab Taurat!',
-        keywords: ['berhala', 'membunuh', 'mencuri', 'zina', 'saksi palsu'],
-        keyDisplay: 'Larangan menyembah berhala, larangan membunuh, larangan mencuri, larangan berbuat zina, atau larangan menjadi saksi palsu.',
-        explanation: 'Taurat berisi larangan menyembah selain Allah, mencuri, membunuh, berzina, dan berdusta.'
-      },
-      {
-        type: 'ESSAY',
-        reading: 'Subhanallah diucapkan saat menyaksikan keajaiban/keindahan alam atau hal buruk, sedangkan Allahu Akbar diucapkan saat melihat keagungan, azan, dan gerakan shalat.',
-        question: 'Kapan waktu yang tepat untuk mengucapkan kalimat tayyibah Subhanallah dan Allahu Akbar?',
-        keywords: ['indah', 'alam', 'azan', 'shalat', 'keagungan'],
-        keyDisplay: 'Subhanallah: Saat melihat keindahan/keajaiban alam. Allahu Akbar: Saat azan, takbiratul ihram shalat, atau takbiran hari raya.',
-        explanation: 'Subhanallah diucapkan saat takjub akan keindahan alam. Allahu Akbar diucapkan dalam ibadah shalat/azan dan melihat kebesaran Allah.'
-      },
-      {
-        type: 'ESSAY',
-        reading: 'Membiasakan diri mengucap kalimat tayyibah memberikan dampak positif yang besar bagi jiwa dan akhlak seorang muslim.',
-        question: 'Sebutkan 2 manfaat membiasakan mengucapkan kalimat Subhanallah dan Allahu Akbar dalam kehidupan sehari-hari!',
-        keywords: ['tenang', 'pahala', 'sombong', 'ingat', 'dekat'],
-        keyDisplay: '1. Mendapatkan pahala dan ketenangan hati. | 2. Menjauhkan diri dari sifat sombong dan mendekatkan diri kepada Allah SWT.',
-        explanation: 'Zikir membuat hati tenteram, memperbanyak pahala, serta menghindarkan manusia dari rasa sombong.'
-      }
-    ];
+        <!-- SCREEN 3: MATCHING PAIRS MINI GAME -->
+        <section id="matchGameScreen" class="hidden bg-white rounded-3xl p-6 md:p-8 card-shadow border-2 border-amber-200 pop-in">
+            <div class="flex items-center justify-between pb-3 mb-4 border-b-2 border-amber-100">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-amber-100 text-amber-700 rounded-2xl flex items-center justify-center font-bold text-xl">
+                        <i class="fa-solid fa-puzzle-piece"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-fredoka text-xl text-amber-950 font-bold">Mini Game: Jodohkan Pasangan</h3>
+                        <p class="text-xs text-slate-500">Klik item di kiri, lalu klik pasangannya yang sesuai di kanan!</p>
+                    </div>
+                </div>
+                <button onclick="showHomeScreen()" class="text-xs font-bold text-amber-700 hover:bg-amber-50 px-3 py-1.5 rounded-xl border border-amber-200 transition">
+                    <i class="fa-solid fa-arrow-left mr-1"></i> Menu
+                </button>
+            </div>
 
-    let currentIdx = 0;
-    let studentName = '';
-    let totalScore = 0;
-    let userAnswers = [];
+            <div class="grid grid-cols-2 gap-4 mb-6">
+                <!-- Left Column -->
+                <div id="matchLeftCol" class="space-y-3">
+                    <!-- Dynamic Left Cards -->
+                </div>
+                <!-- Right Column -->
+                <div id="matchRightCol" class="space-y-3">
+                    <!-- Dynamic Right Cards -->
+                </div>
+            </div>
 
-    function startGame() {
-      const nameInput = document.getElementById('student-name').value.trim();
-      if (!nameInput) {
-        alert('Harap masukkan nama kamu terlebih dahulu!');
-        return;
-      }
-      studentName = nameInput;
-      document.getElementById('display-name').innerText = studentName;
-      document.getElementById('start-screen').classList.add('hidden');
-      document.getElementById('quiz-screen').classList.remove('hidden');
-      loadQuestion();
-    }
+            <div id="matchFeedback" class="hidden p-3 rounded-xl text-center text-xs font-bold mb-4"></div>
 
-    function loadQuestion() {
-      const q = questions[currentIdx];
-      
-      // Update info header
-      document.getElementById('question-progress').innerText = `Soal ${currentIdx + 1} / ${questions.length}`;
-      document.getElementById('current-score').innerText = totalScore;
-      document.getElementById('type-badge').innerText = q.type;
-      
-      // Reset tampilan
-      document.getElementById('explanation-box').classList.add('hidden');
-      document.getElementById('pg-options').innerHTML = '';
-      document.getElementById('text-answer').value = '';
-      document.getElementById('submit-text-btn').disabled = false;
+            <div class="flex justify-between items-center pt-2">
+                <button onclick="initMatchingGame()" class="text-xs font-bold text-slate-600 bg-slate-100 hover:bg-slate-200 px-4 py-2 rounded-xl transition">
+                    <i class="fa-solid fa-rotate mr-1"></i> Acak Ulang
+                </button>
+                <button onclick="startQuizMode()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-fredoka px-5 py-2.5 rounded-xl font-bold shadow text-xs transition">
+                    Lanjut Tes ULIM <i class="fa-solid fa-arrow-right ml-1"></i>
+                </button>
+            </div>
+        </section>
 
-      // 1. ISI BAHAN BACAAN RINGKAS (SELALU DI ATAS SOAL)
-      document.getElementById('reading-material').innerText = q.reading;
+        <!-- SCREEN 4: READING MATERIAL BEFORE QUESTION -->
+        <section id="readingScreen" class="hidden bg-white rounded-3xl p-6 md:p-8 card-shadow border-2 border-emerald-200 pop-in">
+            <div class="flex items-center space-x-3 mb-4 pb-3 border-b-2 border-emerald-100">
+                <div class="w-10 h-10 bg-emerald-100 rounded-xl flex items-center justify-center text-emerald-700 font-bold text-xl">
+                    <i class="fa-solid fa-book-open"></i>
+                </div>
+                <div>
+                    <span class="text-xs font-bold uppercase tracking-wider text-emerald-600">Ringkasan Materi Pendukung</span>
+                    <h3 id="readingTitle" class="font-fredoka text-xl md:text-2xl text-emerald-950 font-bold">Judul Topik</h3>
+                </div>
+            </div>
 
-      // 2. ISI TEKS PERTANYAAN
-      document.getElementById('question-text').innerText = q.question;
+            <div class="bg-emerald-50/80 rounded-2xl p-5 border border-emerald-200 mb-5 text-slate-700 leading-relaxed text-sm md:text-base space-y-3">
+                <div id="readingContent" class="space-y-3"></div>
+            </div>
 
-      // 3. TAMPILKAN FORM SESUAI TIPE SOAL
-      if (q.type === 'PG') {
-        document.getElementById('pg-options').classList.remove('hidden');
-        document.getElementById('text-input-container').classList.add('hidden');
+            <div class="bg-amber-50 rounded-2xl p-3.5 border border-amber-200 mb-6 flex items-start space-x-3">
+                <i class="fa-solid fa-lightbulb text-amber-500 text-lg mt-0.5"></i>
+                <div class="text-xs text-amber-900">
+                    <strong class="font-bold block mb-0.5">Kata Kunci Penting:</strong>
+                    <span id="readingHighlight">Pahami ringkasan di atas sebelum menjawab pertanyaan.</span>
+                </div>
+            </div>
 
-        q.options.forEach((opt, idx) => {
-          const btn = document.createElement('button');
-          btn.className = 'w-full text-left p-3.5 rounded-lg border border-gray-200 hover:bg-emerald-50 hover:border-emerald-300 transition text-sm font-medium text-gray-700 flex items-center justify-between';
-          btn.innerHTML = `<span>${opt}</span> <i class="fa-regular fa-circle text-gray-300"></i>`;
-          btn.onclick = () => answerPG(idx);
-          document.getElementById('pg-options').appendChild(btn);
-        });
-      } else {
-        document.getElementById('pg-options').classList.add('hidden');
-        document.getElementById('text-input-container').classList.remove('hidden');
-      }
-    }
+            <button onclick="transitionToQuestion()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-fredoka text-lg py-3.5 px-6 rounded-2xl shadow-md border-b-4 border-emerald-800 transition flex items-center justify-center space-x-2">
+                <span>Saya Sudah Membaca & Siap Menjawab!</span>
+                <i class="fa-solid fa-arrow-right"></i>
+            </button>
+        </section>
 
-    // PROSES JAWABAN PILIHAN GANDA (PG)
-    function answerPG(selectedIdx) {
-      const q = questions[currentIdx];
-      const isCorrect = (selectedIdx === q.answer);
-      const points = isCorrect ? 4 : 0;
-      totalScore += points;
+        <!-- SCREEN 5: QUIZ QUESTION SCREEN -->
+        <section id="questionScreen" class="hidden bg-white rounded-3xl p-6 md:p-8 card-shadow border-2 border-emerald-200 pop-in">
+            <div class="flex items-center justify-between mb-4">
+                <span id="questionTypePill" class="text-xs font-bold uppercase tracking-wider bg-emerald-100 text-emerald-800 px-3 py-1 rounded-full border border-emerald-300">
+                    <i class="fa-solid fa-pen-to-square mr-1"></i> Pilihan Ganda
+                </span>
+                <button onclick="showReadingAgain()" class="text-xs font-bold text-emerald-600 hover:text-emerald-800 underline flex items-center">
+                    <i class="fa-solid fa-eye mr-1"></i> Baca Materi Lagi
+                </button>
+            </div>
 
-      userAnswers.push({
-        num: currentIdx + 1,
-        type: 'PG',
-        user: q.options[selectedIdx],
-        correctKey: q.options[q.answer],
-        isCorrect: isCorrect,
-        points: points
-      });
+            <h3 id="questionText" class="font-fredoka text-lg md:text-2xl text-slate-900 font-bold mb-6 leading-snug">
+                Pertanyaan akan muncul di sini?
+            </h3>
 
-      // Kunci tombol PG
-      const buttons = document.getElementById('pg-options').querySelectorAll('button');
-      buttons.forEach((btn, idx) => {
-        btn.disabled = true;
-        if (idx === q.answer) {
-          btn.className = 'w-full text-left p-3.5 rounded-lg border-2 border-emerald-500 bg-emerald-100 text-emerald-900 font-bold text-sm flex items-center justify-between';
-        } else if (idx === selectedIdx && !isCorrect) {
-          btn.className = 'w-full text-left p-3.5 rounded-lg border-2 border-rose-500 bg-rose-100 text-rose-900 font-bold text-sm flex items-center justify-between';
+            <!-- CONTAINER A: Multiple Choice Options -->
+            <div id="mcContainer" class="grid grid-cols-1 gap-3 mb-6"></div>
+
+            <!-- CONTAINER B: Short Answer Input -->
+            <div id="fillContainer" class="hidden mb-6 space-y-3">
+                <label for="shortAnswerInput" class="block text-xs font-bold text-slate-600 uppercase tracking-wider">Ketikkan Jawaban Singkat Kamu:</label>
+                <input type="text" id="shortAnswerInput" placeholder="Ketik jawaban di sini..." class="w-full p-4 rounded-2xl border-2 border-emerald-300 focus:border-emerald-500 focus:outline-none font-semibold text-slate-800 text-base shadow-sm">
+                <p class="text-xs text-blue-600 font-medium italic"><i class="fa-solid fa-info-circle mr-1"></i>Jawaban Isian Singkat akan disimpan dan diperiksa oleh Guru.</p>
+                <button id="submitFillBtn" onclick="checkShortAnswer()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-fredoka py-3 rounded-xl font-bold shadow transition">
+                    Simpan Jawaban Isian
+                </button>
+            </div>
+
+            <!-- CONTAINER C: Essay Answer Input -->
+            <div id="essayContainer" class="hidden mb-6 space-y-3">
+                <label for="essayAnswerInput" class="block text-xs font-bold text-slate-600 uppercase tracking-wider">Tuliskan Penjelasan Lengkap Kamu:</label>
+                <textarea id="essayAnswerInput" rows="4" placeholder="Tuliskan jawaban penjelasan kamu selengkap mungkin..." class="w-full p-4 rounded-2xl border-2 border-emerald-300 focus:border-emerald-500 focus:outline-none font-medium text-slate-800 text-sm md:text-base shadow-sm leading-relaxed"></textarea>
+                <p class="text-xs text-amber-600 font-medium italic"><i class="fa-solid fa-info-circle mr-1"></i>Jawaban Uraian akan disimpan dan dinilai oleh Guru.</p>
+                <button id="submitEssayBtn" onclick="checkEssayAnswer()" class="w-full bg-amber-600 hover:bg-amber-700 text-white font-fredoka py-3 rounded-xl font-bold shadow transition">
+                    Simpan Jawaban Uraian
+                </button>
+            </div>
+
+            <!-- Instant Feedback Panel -->
+            <div id="feedbackPanel" class="hidden rounded-2xl p-4 mb-6 transition-all duration-300">
+                <div class="flex items-start space-x-3">
+                    <div id="feedbackIcon" class="text-2xl mt-0.5"></div>
+                    <div class="flex-grow">
+                        <h4 id="feedbackTitle" class="font-fredoka font-bold text-lg mb-1"></h4>
+                        <div id="feedbackText" class="text-xs md:text-sm leading-relaxed space-y-1"></div>
+                    </div>
+                </div>
+            </div>
+
+            <button id="nextBtn" onclick="nextStage()" class="hidden w-full bg-emerald-600 hover:bg-emerald-700 text-white font-fredoka text-lg py-3.5 px-6 rounded-2xl shadow-md border-b-4 border-emerald-800 transition flex items-center justify-center space-x-2">
+                <span>Lanjut ke Soal Berikutnya</span>
+                <i class="fa-solid fa-forward"></i>
+            </button>
+        </section>
+
+        <!-- SCREEN 6: RESULT & CERTIFICATE SCREEN -->
+        <section id="resultScreen" class="hidden bg-white rounded-3xl p-6 md:p-10 card-shadow border-2 border-emerald-200 text-center pop-in">
+            <div class="w-20 h-20 bg-gradient-to-tr from-yellow-400 to-amber-500 rounded-full mx-auto mb-4 flex items-center justify-center shadow-lg border-4 border-white text-3xl text-white float-bg">
+                <i class="fa-solid fa-trophy"></i>
+            </div>
+
+            <h2 class="font-fredoka text-2xl md:text-3xl text-emerald-950 font-bold mb-1">Evaluasi ULIM Selesai!</h2>
+            <p class="text-xs md:text-sm text-slate-600 mb-6">Berikut Laporan Hasil Belajar Akidah Akhlak kamu:</p>
+
+            <!-- Score Summary Card -->
+            <div class="bg-emerald-50/80 rounded-2xl p-6 border-2 border-emerald-200 mb-8 max-w-md mx-auto">
+                <div class="text-xs font-bold text-emerald-800 uppercase tracking-widest mb-1">Nilai Pilihan Ganda (Otomatis)</div>
+                <div id="finalScoreDisplay" class="font-fredoka text-5xl md:text-6xl font-bold text-emerald-600 mb-2">100</div>
+                <div id="gradePredicate" class="inline-block bg-emerald-200 text-emerald-900 text-xs md:text-sm font-bold px-4 py-1.5 rounded-full mb-4">
+                    Sangat Memuaskan (Mumtaz)
+                </div>
+
+                <div class="grid grid-cols-2 gap-2.5 text-left border-t border-emerald-200 pt-4 text-xs">
+                    <div class="bg-white p-2.5 rounded-xl border border-emerald-100 col-span-2 flex justify-between items-center">
+                        <span class="text-slate-600">Pilihan Ganda Benar:</span>
+                        <strong id="correctMcCount" class="text-emerald-600 font-bold text-sm">10 / 10 Soal</strong>
+                    </div>
+                    <div class="bg-blue-50 p-2.5 rounded-xl border border-blue-200 col-span-2 flex justify-between items-center">
+                        <span class="text-blue-900 font-medium"><i class="fa-solid fa-pen-clip mr-1 text-blue-600"></i> Isian Singkat (10 Soal):</span>
+                        <strong class="text-blue-700 font-bold">Tersimpan untuk Guru</strong>
+                    </div>
+                    <div class="bg-amber-50 p-2.5 rounded-xl border border-amber-200 col-span-2 flex justify-between items-center">
+                        <span class="text-amber-900 font-medium"><i class="fa-solid fa-file-pen mr-1 text-amber-600"></i> Uraian / Essay (5 Soal):</span>
+                        <strong class="text-amber-700 font-bold">Tersimpan untuk Guru</strong>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Review Answers Accordion -->
+            <div class="mb-8 text-left max-w-2xl mx-auto">
+                <button onclick="toggleReviewList()" class="w-full bg-slate-100 hover:bg-slate-200 p-3.5 rounded-2xl font-bold text-xs md:text-sm text-slate-700 flex justify-between items-center border border-slate-200">
+                    <span><i class="fa-solid fa-list-check mr-2 text-emerald-600"></i> Lihat Detail Review Semua 25 Jawaban</span>
+                    <i id="reviewChevron" class="fa-solid fa-chevron-down"></i>
+                </button>
+                <div id="reviewContainer" class="hidden mt-3 space-y-3 max-h-96 overflow-y-auto pr-1"></div>
+            </div>
+
+            <!-- Printable Certificate Box -->
+            <div id="certificateContainer" class="bg-gradient-to-b from-emerald-50 to-teal-50 border-4 border-emerald-400 p-6 rounded-2xl mb-8 text-center max-w-xl mx-auto shadow-inner relative overflow-hidden">
+                <div class="border-2 border-dashed border-emerald-300 p-5 rounded-xl">
+                    <div class="text-xs font-bold text-emerald-700 uppercase tracking-widest">Sertifikat Kelulusan Evaluasi Belajar</div>
+                    <h3 class="font-fredoka text-xl text-emerald-950 font-bold my-2">Mata Pelajaran Akidah Akhlak</h3>
+                    <p class="text-xs text-slate-600 italic">Diberikan kepada siswa hebat:</p>
+                    <div id="certName" class="font-fredoka text-2xl text-emerald-800 font-bold my-2 underline decoration-emerald-400">Nama Siswa</div>
+                    <p class="text-xs text-slate-600 max-w-sm mx-auto leading-relaxed">
+                        Telah menyelesaikan simulasi ULIM Akidah Akhlak Kelas 3 MI dengan Nilai PG <span id="certScore" class="font-bold text-emerald-700">100</span>. Jawaban Isian & Essay telah tersimpan untuk penilaian Guru.
+                    </p>
+                    <div class="mt-4 pt-3 border-t border-emerald-200 flex justify-between items-center text-[10px] text-emerald-800 font-semibold">
+                        <span>Kurikulum MI Kelas 3</span>
+                        <span>Tanggal: <span id="certDate">2026-09-24</span></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex flex-col sm:flex-row justify-center gap-3">
+                <button onclick="showHomeScreen()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-fredoka py-3 px-6 rounded-xl shadow border-b-4 border-emerald-800 transition">
+                    <i class="fa-solid fa-house mr-2"></i> Menu Utama
+                </button>
+                <button onclick="window.print()" class="bg-blue-600 hover:bg-blue-700 text-white font-fredoka py-3 px-6 rounded-xl shadow border-b-4 border-blue-800 transition">
+                    <i class="fa-solid fa-print mr-2"></i> Cetak Hasil / Sertifikat
+                </button>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-emerald-950 text-emerald-200 text-xs py-3.5 text-center mt-auto border-t-2 border-emerald-900">
+        <p>© Game Pembelajaran Akidah Akhlak Kelas 3 MI • Berdasarkan Kisi-Kisi ULIM Bab 1 & Bab 2</p>
+    </footer>
+
+    <script>
+        // Game State Variables
+        let currentStageIndex = 0;
+        let score = 0;
+        let soundEnabled = true;
+        let bgmEnabled = false;
+        let selectedAvatar = 'boy';
+        let playerName = 'Ananda';
+        let userAnswers = [];
+        let bgmInterval = null;
+
+        // Web Audio API Synthesizer
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+        function playSound(type) {
+            if (!soundEnabled) return;
+            try {
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+
+                if (type === 'correct') {
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(523.25, audioCtx.currentTime);
+                    osc.frequency.setValueAtTime(659.25, audioCtx.currentTime + 0.1);
+                    osc.frequency.setValueAtTime(783.99, audioCtx.currentTime + 0.2);
+                    gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.4);
+                    osc.start();
+                    osc.stop(audioCtx.currentTime + 0.4);
+                } else if (type === 'wrong') {
+                    osc.type = 'sawtooth';
+                    osc.frequency.setValueAtTime(220, audioCtx.currentTime);
+                    osc.frequency.setValueAtTime(164.81, audioCtx.currentTime + 0.15);
+                    gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.35);
+                    osc.start();
+                    osc.stop(audioCtx.currentTime + 0.35);
+                } else if (type === 'click') {
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(440, audioCtx.currentTime);
+                    gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.08);
+                    osc.start();
+                    osc.stop(audioCtx.currentTime + 0.08);
+                }
+            } catch (e) {
+                console.log('Audio error');
+            }
         }
-      });
 
-      showExplanation(isCorrect, q.options[q.answer], q.explanation);
-    }
-
-    // PROSES KOREKSI ISIAN & ESSAY (SISTEM KOREKSI OTOMATIS)
-    function submitTextAnswer() {
-      const userText = document.getElementById('text-answer').value.trim();
-      if (!userText) {
-        alert('Harap tuliskan jawabanmu sebelum mengirim!');
-        return;
-      }
-
-      document.getElementById('submit-text-btn').disabled = true;
-      const q = questions[currentIdx];
-      const lowerUser = userText.toLowerCase();
-
-      // Cek apakah ada kata kunci yang cocok dalam jawaban siswa
-      let isCorrect = false;
-      q.keywords.forEach(kw => {
-        if (lowerUser.includes(kw.toLowerCase())) {
-          isCorrect = true;
+        function toggleSound() {
+            soundEnabled = !soundEnabled;
+            const icon = document.getElementById('soundIcon');
+            icon.className = soundEnabled ? 'fa-solid fa-volume-high' : 'fa-solid fa-volume-xmark text-rose-300';
         }
-      });
 
-      const points = isCorrect ? 4 : 1; // Jika tepat dapat 4 poin, jika kurang tepat tetap dapat 1 poin partisipasi
-      totalScore += points;
+        function toggleBGM() {
+            bgmEnabled = !bgmEnabled;
+            const icon = document.getElementById('bgmIcon');
+            if (bgmEnabled) {
+                icon.className = 'fa-solid fa-music text-yellow-300';
+                startBGM();
+            } else {
+                icon.className = 'fa-solid fa-music text-slate-300';
+                stopBGM();
+            }
+        }
 
-      userAnswers.push({
-        num: currentIdx + 1,
-        type: q.type,
-        user: userText,
-        correctKey: q.keyDisplay,
-        isCorrect: isCorrect,
-        points: points
-      });
+        function startBGM() {
+            if (bgmInterval) clearInterval(bgmInterval);
+            let noteIndex = 0;
+            const notes = [261.63, 329.63, 392.00, 523.25, 392.00, 329.63]; // C E G C G E cheerful loop
+            bgmInterval = setInterval(() => {
+                if (!bgmEnabled) return;
+                try {
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(notes[noteIndex % notes.length], audioCtx.currentTime);
+                    gain.gain.setValueAtTime(0.03, audioCtx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.4);
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+                    osc.start();
+                    osc.stop(audioCtx.currentTime + 0.4);
+                    noteIndex++;
+                } catch(e) {}
+            }, 600);
+        }
 
-      showExplanation(isCorrect, q.keyDisplay, q.explanation);
-    }
+        function stopBGM() {
+            if (bgmInterval) {
+                clearInterval(bgmInterval);
+                bgmInterval = null;
+            }
+        }
 
-    // TAMPILKAN KOTAK PENJELASAN & KOREKSI LANGSUNG
-    function showExplanation(isCorrect, correctAnswer, explanation) {
-      const box = document.getElementById('explanation-box');
-      const header = document.getElementById('feedback-header');
-      const correctDisplay = document.getElementById('correct-answer-display');
-      const expText = document.getElementById('explanation-text');
+        function selectAvatar(type) {
+            selectedAvatar = type;
+            playSound('click');
+            const boyBtn = document.getElementById('avatarBoy');
+            const girlBtn = document.getElementById('avatarGirl');
 
-      box.classList.remove('hidden');
+            if (type === 'boy') {
+                boyBtn.className = 'avatar-btn flex-1 p-2.5 rounded-2xl border-4 border-emerald-500 bg-white shadow-md transition transform hover:scale-105 flex items-center justify-center space-x-2';
+                girlBtn.className = 'avatar-btn flex-1 p-2.5 rounded-2xl border-4 border-transparent bg-slate-100 hover:bg-white shadow-sm transition transform hover:scale-105 flex items-center justify-center space-x-2';
+            } else {
+                girlBtn.className = 'avatar-btn flex-1 p-2.5 rounded-2xl border-4 border-emerald-500 bg-white shadow-md transition transform hover:scale-105 flex items-center justify-center space-x-2';
+                boyBtn.className = 'avatar-btn flex-1 p-2.5 rounded-2xl border-4 border-transparent bg-slate-100 hover:bg-white shadow-sm transition transform hover:scale-105 flex items-center justify-center space-x-2';
+            }
+        }
 
-      if (isCorrect) {
-        box.className = 'p-5 rounded-xl border border-emerald-300 bg-emerald-50 text-emerald-900 space-y-2';
-        header.innerHTML = `<i class="fa-solid fa-circle-check text-emerald-600 text-xl mr-2"></i> JAWABANMU BENAR! (+4 Poin)`;
-        confetti({ particleCount: 30, spread: 60, origin: { y: 0.8 } });
-      } else {
-        box.className = 'p-5 rounded-xl border border-amber-300 bg-amber-50 text-amber-900 space-y-2';
-        header.innerHTML = `<i class="fa-solid fa-circle-exclamation text-amber-600 text-xl mr-2"></i> JAWABAN KURANG TEPAT`;
-      }
+        function updatePlayerName() {
+            const nameInput = document.getElementById('playerNameInput').value.trim();
+            if (nameInput !== "") {
+                playerName = nameInput;
+            }
+            document.getElementById('displayPlayerName').innerText = playerName;
+            document.getElementById('certName').innerText = playerName;
+        }
 
-      correctDisplay.innerText = correctAnswer;
-      expText.innerText = explanation;
-      document.getElementById('current-score').innerText = totalScore;
-    }
+        function showHomeScreen() {
+            playSound('click');
+            document.getElementById('studyScreen').classList.add('hidden');
+            document.getElementById('matchGameScreen').classList.add('hidden');
+            document.getElementById('readingScreen').classList.add('hidden');
+            document.getElementById('questionScreen').classList.add('hidden');
+            document.getElementById('resultScreen').classList.add('hidden');
+            document.getElementById('progressBarContainer').classList.add('hidden');
+            document.getElementById('welcomeScreen').classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
 
-    function nextQuestion() {
-      currentIdx++;
-      if (currentIdx < questions.length) {
-        loadQuestion();
-      } else {
-        showResults();
-      }
-    }
+        // ==========================================
+        // DATASET KISI-KISI ULIM AKIDAH AKHLAK KELAS 3 MI
+        // ==========================================
+        const gameData = [
+            // BAGIAN A: 10 PILIHAN GANDA (MC)
+            {
+                bab: "Bab 1: Kitab-Kitab Allah",
+                type: "mc",
+                typeLabel: "Pilihan Ganda",
+                title: "1. Pengertian Beriman Kepada Kitab Allah",
+                reading: `
+                    <p><strong>Secara Bahasa:</strong> Kata <em>iman</em> berasal dari bahasa Arab yang berarti membenarkan (<em>tasdiq</em>) atau meyakini.</p>
+                    <p><strong>Secara Istilah:</strong> Beriman kepada kitab-kitab Allah SWT berarti meyakini dengan sepenuh hati bahwa Allah telah menurunkan wahyu-Nya dalam bentuk kitab kepada para rasul sebagai pedoman dan petunjuk hidup bagi manusia.</p>
+                `,
+                highlight: "Iman kepada kitab Allah berarti meyakini sepenuh hati bahwa Allah menurunkan kitab sebagai pedoman hidup.",
+                question: "Apakah arti beriman kepada kitab-kitab Allah SWT secara istilah?",
+                options: [
+                    "Hanya membaca kitab tanpa mematuhi isinya",
+                    "Meyakini sepenuh hati bahwa Allah menurunkan kitab-Nya kepada rasul sebagai pedoman hidup",
+                    "Menganggap kitab suci sebagai buku cerita biasa",
+                    "Percaya bahwa kitab suci dibuat oleh manusia biasa"
+                ],
+                correctIndex: 1,
+                explanation: "Iman secara istilah artinya meyakini sepenuh hati bahwa Allah SWT menurunkan kitab-kitab-Nya kepada para rasul sebagai pedoman hidup manusia."
+            },
+            {
+                bab: "Bab 1: Kitab-Kitab Allah",
+                type: "mc",
+                typeLabel: "Pilihan Ganda",
+                title: "2. Urutan Rukun Iman",
+                reading: `
+                    <p>Rukun Iman dalam Islam berjumlah 6 (enam):</p>
+                    <ol class="list-decimal pl-5 space-y-1 font-semibold">
+                        <li>Iman kepada Allah SWT</li>
+                        <li>Iman kepada Malaikat-Malaikat Allah</li>
+                        <li><span class="text-emerald-700 bg-yellow-100 px-1 rounded">Iman kepada Kitab-Kitab Allah</span></li>
+                        <li>Iman kepada Rasul-Rasul Allah</li>
+                        <li>Iman kepada Hari Akhir (Kiamat)</li>
+                        <li>Iman kepada Qada dan Qadar</li>
+                    </ol>
+                `,
+                highlight: "Iman kepada kitab-kitab Allah merupakan Rukun Iman yang ke-3 (ketiga).",
+                question: "Beriman kepada kitab-kitab Allah SWT merupakan urutan Rukun Iman yang ke...",
+                options: [
+                    "Rukun Iman ke-1",
+                    "Rukun Iman ke-2",
+                    "Rukun Iman ke-3",
+                    "Rukun Iman ke-4"
+                ],
+                correctIndex: 2,
+                explanation: "Urutan Rukun Iman: 1. Allah, 2. Malaikat, 3. Kitab-kitab Allah, 4. Rasul, 5. Hari Kiamat, 6. Qada & Qadar."
+            },
+            {
+                bab: "Bab 1: Kitab-Kitab Allah",
+                type: "mc",
+                typeLabel: "Pilihan Ganda",
+                title: "3. Empat Kitab Allah & Penerimanya",
+                reading: `
+                    <p>4 Kitab suci yang wajib diimani beserta rasul penerimanya:</p>
+                    <ul class="list-disc pl-5 space-y-1">
+                        <li><strong>Kitab Taurat:</strong> Diturunkan kepada Nabi Musa a.s.</li>
+                        <li><strong>Kitab Zabur:</strong> Diturunkan kepada Nabi Daud a.s.</li>
+                        <li><strong>Kitab Injil:</strong> Diturunkan kepada Nabi Isa a.s.</li>
+                        <li><strong>Kitab Al-Qur'an:</strong> Diturunkan kepada Nabi Muhammad SAW.</li>
+                    </ul>
+                `,
+                highlight: "Kitab Taurat (Nabi Musa a.s.), Zabur (Nabi Daud a.s.), Injil (Nabi Isa a.s.), Al-Qur'an (Nabi Muhammad SAW).",
+                question: "Kitab suci Zabur diturunkan oleh Allah SWT kepada nabi...",
+                options: [
+                    "Nabi Musa a.s.",
+                    "Nabi Daud a.s.",
+                    "Nabi Isa a.s.",
+                    "Nabi Muhammad SAW"
+                ],
+                correctIndex: 1,
+                explanation: "Kitab Zabur diturunkan Allah SWT kepada Nabi Daud a.s. untuk kaum Bani Israil."
+            },
+            {
+                bab: "Bab 1: Kitab-Kitab Allah",
+                type: "mc",
+                typeLabel: "Pilihan Ganda",
+                title: "4. Hukum Mengimani Kitab Allah",
+                reading: `
+                    <p>Hukum beriman kepada seluruh kitab-kitab Allah SWT adalah <strong>Fardhu 'Ain (Wajib bagi setiap individu muslim)</strong>.</p>
+                    <p>Perintah ini ditegaskan dalam Al-Qur'an Surat An-Nisa' ayat 136. Mengingkari salah satu kitab Allah menyebabkan seseorang berdosa dan keluar dari keimanan.</p>
+                `,
+                highlight: "Hukum beriman kepada kitab-kitab Allah adalah Wajib / Fardhu 'Ain bagi setiap muslim.",
+                question: "Apakah hukum beriman kepada kitab-kitab Allah SWT bagi setiap muslim?",
+                options: [
+                    "Sunnah Mua'kkad",
+                    "Wajib / Fardhu 'Ain",
+                    "Makruh",
+                    "Mubah (Boleh ditinggalkan)"
+                ],
+                correctIndex: 1,
+                explanation: "Mengimani kitab-kitab Allah SWT hukumnya WAJIB (Fardhu 'Ain) bagi setiap orang beriman."
+            },
+            {
+                bab: "Bab 1: Kitab-Kitab Allah",
+                type: "mc",
+                typeLabel: "Pilihan Ganda",
+                title: "5. Larangan dalam Isi Pokok Kitab Taurat",
+                reading: `
+                    <p>Kitab Taurat memuat 10 pokok ajaran (<em>Ten Commandments</em>). Beberapa larangan tegas di dalamnya adalah:</p>
+                    <ul class="list-disc pl-5 space-y-1">
+                        <li>Larangan menyembah patung atau berhala (syirik).</li>
+                        <li>Larangan membunuh sesama manusia.</li>
+                        <li>Larangan mencuri, berzina, dan saksi palsu.</li>
+                    </ul>
+                `,
+                highlight: "Isi pokok Kitab Taurat melarang menyembah patung/berhala, membunuh, mencuri, dan saksi palsu.",
+                question: "Berikut ini yang TERMASUK larangan dalam isi pokok Kitab Taurat adalah...",
+                options: [
+                    "Larangan berpuasa di bulan Ramadan",
+                    "Larangan menyembah patung atau berhala",
+                    "Larangan berdagang di pasar",
+                    "Larangan menuntut ilmu"
+                ],
+                correctIndex: 1,
+                explanation: "Salah satu dari 10 larangan pokok dalam Kitab Taurat adalah larangan menyembah patung atau berhala."
+            },
+            {
+                bab: "Bab 1: Kitab-Kitab Allah",
+                type: "mc",
+                typeLabel: "Pilihan Ganda",
+                title: "6. Fungsi Kitab Al-Qur'an",
+                reading: `
+                    <p>Al-Qur'an merupakan kitab suci terakhir dan penyempurna kitab-kitab sebelumnya. Fungsinya antara lain:</p>
+                    <ul class="list-disc pl-5 space-y-1">
+                        <li><strong>Hudan:</strong> Petunjuk hidup manusia.</li>
+                        <li><strong>Al-Furqan:</strong> Pembeda antara yang benar (hak) dan yang salah (batil).</li>
+                        <li><strong>As-Syifa:</strong> Penawar obat penyakit hati/jiwa.</li>
+                    </ul>
+                `,
+                highlight: "Al-Qur'an berfungsi sebagai Al-Furqan yaitu pembeda antara kebenaran (hak) dan kebatilan (salah).",
+                question: "Al-Qur'an dinamakan 'Al-Furqan' karena memiliki fungsi sebagai...",
+                options: [
+                    "Obat penawar penyakit jasmani",
+                    "Pembeda antara hal yang benar (hak) dan yang salah (batil)",
+                    "Buku bacaan saat waktu senggang",
+                    "Kisah sejarah kuno saja"
+                ],
+                correctIndex: 1,
+                explanation: "Al-Furqan artinya Pembeda, yaitu membedakan antara ajaran yang benar (hak) dan ajaran yang salah (batil)."
+            },
+            {
+                bab: "Bab 2: Kalimat Tayyibah",
+                type: "mc",
+                typeLabel: "Pilihan Ganda",
+                title: "7. Pengertian Bacaan Subhanallah (Tasbih)",
+                reading: `
+                    <p>Kalimat tayyibah <strong>Subhanallah (سُبْحَانَ اللهِ)</strong> disebut juga bacaan <strong>Tasbih</strong>.</p>
+                    <p>Arti Subhanallah adalah <strong>"Maha Suci Allah"</strong>. Pengucapan ini mensucikan Allah dari segala sifat kekurangan, cacat, dan persekutuan.</p>
+                `,
+                highlight: "Subhanallah disebut bacaan Tasbih yang artinya 'Maha Suci Allah'.",
+                question: "Apakah arti dari bacaan kalimat tayyibah 'Subhanallah'?",
+                options: [
+                    "Allah Maha Besar",
+                    "Maha Suci Allah",
+                    "Segala Puji Bagi Allah",
+                    "Tidak ada Tuhan selain Allah"
+                ],
+                correctIndex: 1,
+                explanation: "Subhanallah berarti 'Maha Suci Allah', yaitu mensucikan Allah dari segala bentuk kelemahan."
+            },
+            {
+                bab: "Bab 2: Kalimat Tayyibah",
+                type: "mc",
+                typeLabel: "Pilihan Ganda",
+                title: "8. Pengertian Bacaan Allahu Akbar (Takbir)",
+                reading: `
+                    <p>Kalimat tayyibah <strong>Allahu Akbar (اللهُ أَكْبَرُ)</strong> disebut juga bacaan <strong>Takbir</strong>.</p>
+                    <p>Arti Allahu Akbar adalah <strong>"Allah Maha Besar"</strong>. Kalimat ini mengingatkan bahwa keagungan dan kekuasaan Allah melebihi segalanya di alam semesta.</p>
+                `,
+                highlight: "Allahu Akbar disebut bacaan Takbir yang artinya 'Allah Maha Besar'.",
+                question: "Bacaan kalimat tayyibah 'Allahu Akbar' sering disebut juga dengan bacaan...",
+                options: [
+                    "Tasbih",
+                    "Tahmid",
+                    "Takbir",
+                    "Tahlil"
+                ],
+                correctIndex: 2,
+                explanation: "Allahu Akbar disebut bacaan Takbir, sedangkan Subhanallah disebut Tasbih."
+            },
+            {
+                bab: "Bab 2: Kalimat Tayyibah",
+                type: "mc",
+                typeLabel: "Pilihan Ganda",
+                title: "9. Waktu Mengucapkan Subhanallah",
+                reading: `
+                    <p>Kalimat <strong>Subhanallah</strong> tepat diucapkan saat:</p>
+                    <ul class="list-disc pl-5 space-y-1">
+                        <li>Melihat atau mendengar hal yang menakjubkan / indah.</li>
+                        <li>Melihat keburukan atau hal yang tidak pantas.</li>
+                        <li>Berzikir sesudah shalat fardhu (33 kali).</li>
+                        <li>Mengingatkan imam shalat yang salah/lupa (bagi jamaah laki-laki).</li>
+                    </ul>
+                `,
+                highlight: "Mengingatkan kesalahan gerakan imam shalat bagi laki-laki adalah dengan mengucapkan Subhanallah.",
+                question: "Bagi jamaah LAKI-LAKI, apabila imam lupa atau salah gerakan shalat, cara mengingatkannya adalah membaca...",
+                options: [
+                    "Allahu Akbar secara keras",
+                    "Subhanallah",
+                    "Alhamdulillah",
+                    "Astaghfirullah"
+                ],
+                correctIndex: 1,
+                explanation: "Jamaah laki-laki mengingatkan imam yang lupa dengan membaca 'Subhanallah', sedangkan perempuan menepuk tangan."
+            },
+            {
+                bab: "Bab 2: Kalimat Tayyibah",
+                type: "mc",
+                typeLabel: "Pilihan Ganda",
+                title: "10. Waktu Mengucapkan Allahu Akbar",
+                reading: `
+                    <p>Kalimat <strong>Allahu Akbar (Takbir)</strong> tepat diucapkan saat:</p>
+                    <ul class="list-disc pl-5 space-y-1">
+                        <li>Mengumandangkan Azan dan Iqamah.</li>
+                        <li>Takbiratul Ihram dan perpindahan gerakan shalat.</li>
+                        <li>Malam takbiran Hari Raya Idul Fitri dan Idul Adha.</li>
+                        <li>Melihat keagungan ciptaan Allah (seperti gunung tinggi).</li>
+                    </ul>
+                `,
+                highlight: "Allahu Akbar dikumandangkan pada malam Hari Raya Idul Fitri dan Idul Adha.",
+                question: "Kapan waktu yang tepat mengumandangkan takbir Allahu Akbar secara bersama-sama di masjid?",
+                options: [
+                    "Saat hendak tidur di malam hari",
+                    "Pada malam Hari Raya Idul Fitri dan Idul Adha",
+                    "Saat sedang makan bersama keluarga",
+                    "Saat berolahraga di lapangan"
+                ],
+                correctIndex: 1,
+                explanation: "Takbir dikumandangkan pada malam Hari Raya Idul Fitri dan Idul Adha untuk mengagungkan kebesaran Allah."
+            },
 
-    // TAMPILKAN LAPORAN HASIL AKHIR
-    function showResults() {
-      document.getElementById('quiz-screen').classList.add('hidden');
-      document.getElementById('result-screen').classList.remove('hidden');
-      
-      document.getElementById('final-student-name').innerText = studentName;
-      document.getElementById('final-score').innerText = totalScore;
+            // BAGIAN B: 10 ISIAN SINGKAT (FILL)
+            {
+                bab: "Bab 1: Kitab-Kitab Allah",
+                type: "fill",
+                typeLabel: "Isian Singkat",
+                title: "11. Bahasa Asal Kitab Taurat",
+                reading: "<p>Kitab Taurat diturunkan kepada Nabi Musa a.s. dalam <strong>Bahasa Ibrani</strong> untuk kaum Bani Israil.</p>",
+                highlight: "Kitab Taurat diturunkan dalam Bahasa Ibrani.",
+                question: "Kitab Taurat diturunkan kepada Nabi Musa a.s. dalam bahasa...",
+                correctAnswers: ["ibrani", "bahasa ibrani"],
+                explanation: "Kitab Taurat ditulis menggunakan Bahasa Ibrani."
+            },
+            {
+                bab: "Bab 1: Kitab-Kitab Allah",
+                type: "fill",
+                typeLabel: "Isian Singkat",
+                title: "12. Penerima Kitab Injil",
+                reading: "<p>Kitab Injil diturunkan oleh Allah SWT kepada <strong>Nabi Isa a.s.</strong> sebagai pedoman kaum Nasrani.</p>",
+                highlight: "Nabi Isa a.s. adalah rasul penerima Kitab Injil.",
+                question: "Kitab suci Injil diturunkan oleh Allah SWT kepada Nabi...",
+                correctAnswers: ["isa", "isa as", "nabi isa", "nabi isa as", "isa a.s."],
+                explanation: "Nabi Isa a.s. menerima wahyu Kitab Injil."
+            },
+            {
+                bab: "Bab 1: Kitab-Kitab Allah",
+                type: "fill",
+                typeLabel: "Isian Singkat",
+                title: "13. Bahasa Asal Kitab Al-Qur'an",
+                reading: "<p>Kitab Al-Qur'an diturunkan Allah SWT dalam <strong>Bahasa Arab</strong> melalui perantara Malaikat Jibril kepada Nabi Muhammad SAW.</p>",
+                highlight: "Al-Qur'an diturunkan dalam Bahasa Arab.",
+                question: "Kitab suci Al-Qur'an diturunkan oleh Allah SWT dalam bahasa...",
+                correctAnswers: ["arab", "bahasa arab"],
+                explanation: "Al-Qur'an diturunkan dalam Bahasa Arab."
+            },
+            {
+                bab: "Bab 1: Kitab-Kitab Allah",
+                type: "fill",
+                typeLabel: "Isian Singkat",
+                title: "14. Jumlah Juz dalam Al-Qur'an",
+                reading: "<p>Kitab suci Al-Qur'an terdiri dari 114 surah dan <strong>30 Juz</strong> yang diturunkan secara bertahap selama kurang lebih 22 tahun 2 bulan 22 hari.</p>",
+                highlight: "Al-Qur'an terdiri dari 30 Juz.",
+                question: "Keseluruhan isi kitab Al-Qur'an terbagi menjadi berapa juz?",
+                correctAnswers: ["30", "30 juz", "tiga puluh"],
+                explanation: "Al-Qur'an terdiri atas 30 Juz dan 114 Surah."
+            },
+            {
+                bab: "Bab 1: Kitab-Kitab Allah",
+                type: "fill",
+                typeLabel: "Isian Singkat",
+                title: "15. Perintah Menghormati Hari Sabat",
+                reading: "<p>Dalam ajaran pokok Kitab Taurat, kaum Bani Israil diperintahkan memuliakan hari khusus untuk fokus beribadah, yaitu <strong>Hari Sabat (Sabtu)</strong>.</p>",
+                highlight: "Hari Sabat (Sabtu) adalah hari suci ibadah dalam Kitab Taurat.",
+                question: "Dalam isi pokok Kitab Taurat, terdapat perintah memuliakan hari khusus ibadah yaitu hari...",
+                correctAnswers: ["sabat", "sabtu", "hari sabat", "hari sabtu"],
+                explanation: "Hari Sabat (Sabtu) diwajibkan untuk beribadah bagi kaum Nabi Musa."
+            },
+            {
+                bab: "Bab 2: Kalimat Tayyibah",
+                type: "fill",
+                typeLabel: "Isian Singkat",
+                title: "16. Sebutan Kalimat Subhanallah",
+                reading: "<p>Kalimat tayyibah Subhanallah dinamakan juga dengan bacaan <strong>Tasbih</strong>.</p>",
+                highlight: "Subhanallah dinamakan bacaan Tasbih.",
+                question: "Bacaan 'Subhanallah' disebut juga dengan bacaan...",
+                correctAnswers: ["tasbih", "bacaan tasbih"],
+                explanation: "Subhanallah = Bacaan Tasbih."
+            },
+            {
+                bab: "Bab 2: Kalimat Tayyibah",
+                type: "fill",
+                typeLabel: "Isian Singkat",
+                title: "17. Sebutan Kalimat Allahu Akbar",
+                reading: "<p>Kalimat tayyibah Allahu Akbar dinamakan juga dengan bacaan <strong>Takbir</strong>.</p>",
+                highlight: "Allahu Akbar dinamakan bacaan Takbir.",
+                question: "Bacaan 'Allahu Akbar' disebut juga dengan bacaan...",
+                correctAnswers: ["takbir", "bacaan takbir"],
+                explanation: "Allahu Akbar = Bacaan Takbir."
+            },
+            {
+                bab: "Bab 2: Kalimat Tayyibah",
+                type: "fill",
+                typeLabel: "Isian Singkat",
+                title: "18. Jumlah Dzikir Tasbih Seusai Shalat",
+                reading: "<p>Setelah shalat fardhu, kita disunnahkan berzikir membaca Tasbih (Subhanallah) sebanyak <strong>33 kali</strong>.</p>",
+                highlight: "Zikir Subhanallah setelah shalat dibaca 33 kali.",
+                question: "Berapa kali kita disunnahkan membaca kalimat Tasbih (Subhanallah) seusai shalat fardhu?",
+                correctAnswers: ["33", "33 kali", "tiga puluh tiga"],
+                explanation: "Dzikir sesudah shalat dibaca masing-masing 33 kali."
+            },
+            {
+                bab: "Bab 2: Kalimat Tayyibah",
+                type: "fill",
+                typeLabel: "Isian Singkat",
+                title: "19. Sifat Buruk yang Dihindarkan dari Takbir",
+                reading: "<p>Sering mengucapkan Allahu Akbar menyadarkan keagungan Allah sehingga mengikis sifat <strong>Sombong (Takabur)</strong> pada diri manusia.</p>",
+                highlight: "Mengucapkan Allahu Akbar menghindarkan diri dari sifat sombong/takabur.",
+                question: "Sering membaca takbir Allahu Akbar membuat kita terhindar dari sifat buruk yaitu sifat...",
+                correctAnswers: ["sombong", "takabur", "angkuh"],
+                explanation: "Takbir menghindarkan manusia dari sifat sombong/takabur."
+            },
+            {
+                bab: "Bab 2: Kalimat Tayyibah",
+                type: "fill",
+                typeLabel: "Isian Singkat",
+                title: "20. Panggilan Shalat yang Menggunakan Takbir",
+                reading: "<p>Lafal Allahu Akbar dikumandangkan sebagai panggilan penanda masuk waktu shalat fardhu, yaitu panggilannya bernama <strong>Azan (Adzan)</strong>.</p>",
+                highlight: "Panggilan masuk waktu shalat adalah Azan.",
+                question: "Panggilan suara di masjid yang menandakan masuknya waktu shalat disebut...",
+                correctAnswers: ["azan", "adzan"],
+                explanation: "Azan dibuka dengan kalimat Allahu Akbar."
+            },
 
-      let predicate = '';
-      if (totalScore >= 85) predicate = 'Predikat: Mumtaz (Sangat Baik / Istimewa) 🌟';
-      else if (totalScore >= 70) predicate = 'Predikat: Jayyid (Baik) 👍';
-      else predicate = 'Predikat: Perlu Ditingkatkan Belajarnya 📖';
-      document.getElementById('score-predicate').innerText = predicate;
+            // BAGIAN C: 5 ESSAY / URAIAN
+            {
+                bab: "Bab 1: Kitab-Kitab Allah",
+                type: "essay",
+                typeLabel: "Uraian / Essay",
+                title: "21. Menyebutkan 4 Kitab Allah & Penerimanya",
+                reading: "<p>4 Kitab Allah & Rasunya: 1. Taurat (Nabi Musa a.s.), 2. Zabur (Nabi Daud a.s.), 3. Injil (Nabi Isa a.s.), 4. Al-Qur'an (Nabi Muhammad SAW).</p>",
+                highlight: "Tuliskan nama 4 kitab Allah beserta nabi penerimanya.",
+                question: "Sebutkan 4 (empat) nama kitab Allah SWT beserta nama nabi/rasul penerimanya!",
+                sampleAnswer: "1. Taurat -> Nabi Musa a.s.\n2. Zabur -> Nabi Daud a.s.\n3. Injil -> Nabi Isa a.s.\n4. Al-Qur'an -> Nabi Muhammad SAW.",
+                explanation: "Kunci Jawaban Guru:\n• Taurat = Nabi Musa a.s.\n• Zabur = Nabi Daud a.s.\n• Injil = Nabi Isa a.s.\n• Al-Qur'an = Nabi Muhammad SAW."
+            },
+            {
+                bab: "Bab 1: Kitab-Kitab Allah",
+                type: "essay",
+                typeLabel: "Uraian / Essay",
+                title: "22. Larangan dalam Kitab Taurat",
+                reading: "<p>Larangan Kitab Taurat: Menyembah patung/berhala, membunuh, mencuri, berbuat zina, saksi palsu.</p>",
+                highlight: "Sebutkan minimal 3 larangan dalam ajaran Kitab Taurat.",
+                question: "Sebutkan 3 contoh larangan yang terdapat dalam isi pokok Kitab Taurat!",
+                sampleAnswer: "1. Larangan menyembah patung/berhala.\n2. Larangan membunuh sesama manusia.\n3. Larangan mencuri.",
+                explanation: "Larangan Kitab Taurat: Dilarang menyembah berhala, dilarang membunuh, dilarang mencuri, dilarang berzina, dilarang saksi palsu."
+            },
+            {
+                bab: "Bab 1: Kitab-Kitab Allah",
+                type: "essay",
+                typeLabel: "Uraian / Essay",
+                title: "23. Fungsi Diturunkannya Al-Qur'an",
+                reading: "<p>Fungsi Al-Qur'an: Petunjuk hidup (hudan), pembeda benar dan salah (al-furqan), obat penawar hati (as-syifa), dan penyempurna kitab terdahulu.</p>",
+                highlight: "Jelaskan 3 fungsi diturunkannya Al-Qur'an bagi manusia.",
+                question: "Jelaskan 3 fungsi utama diturunkannya kitab suci Al-Qur'an bagi manusia!",
+                sampleAnswer: "1. Sebagai petunjuk hidup (hudan).\n2. Sebagai pembeda antara kebenaran dan kesalahan (al-furqan).\n3. Sebagai penyempurna kitab-kitab sebelumnya.",
+                explanation: "Fungsi Al-Qur'an: Petunjuk hidup, pembeda hak & batil, obat jiwa, penyempurna kitab terdahulu."
+            },
+            {
+                bab: "Bab 2: Kalimat Tayyibah",
+                type: "essay",
+                typeLabel: "Uraian / Essay",
+                title: "24. Waktu Tepat Mengucapkan Subhanallah",
+                reading: "<p>Waktu mengucapkan Subhanallah: Melihat hal indah/menakjubkan, melihat sesuatu yang buruk, berzikir sesudah shalat, dan mengingatkan imam shalat bagi laki-laki.</p>",
+                highlight: "Tuliskan 2 waktu tepat mengucapkan Subhanallah.",
+                question: "Sebutkan 2 waktu yang tepat bagi kita untuk mengucapkan kalimat tayyibah Subhanallah!",
+                sampleAnswer: "1. Ketika melihat pemandangan atau kejadian menakjubkan.\n2. Ketika berzikir seusai shalat fardhu (33 kali).",
+                explanation: "Waktu tepat: Melihat keajaiban ciptaan Allah, berzikir sesudah shalat, melihat keburukan, mengingatkan imam shalat."
+            },
+            {
+                bab: "Bab 2: Kalimat Tayyibah",
+                type: "essay",
+                typeLabel: "Uraian / Essay",
+                title: "25. Manfaat Mengucapkan Subhanallah & Allahu Akbar",
+                reading: "<p>Manfaat dzikir: Mendapat pahala dari Allah, menenangkan hati, dihapus dosa-dosa kecil, dan terhindar dari sifat sombong.</p>",
+                highlight: "Tuliskan 3 manfaat mengucapkan Subhanallah dan Allahu Akbar.",
+                question: "Tuliskan 3 manfaat membiasakan diri mengucapkan kalimat Subhanallah dan Allahu Akbar!",
+                sampleAnswer: "1. Mendapatkan pahala dari Allah SWT.\n2. Hati dan jiwa menjadi tenang.\n3. Terhindar dari sifat sombong dan angkuh.",
+                explanation: "Manfaatnya: Mendapat pahala, menenangkan jiwa, menghapus dosa kecil, serta mengikis sifat sombong."
+            }
+        ];
 
-      // Rekapitulasi Jawaban
-      const summaryContainer = document.getElementById('summary-list');
-      summaryContainer.innerHTML = '<h4 class="font-bold text-gray-700 mb-2">Rekapitulasi Koreksi Jawaban:</h4>';
-      
-      userAnswers.forEach(ans => {
-        const item = document.createElement('div');
-        item.className = `p-2 rounded border ${ans.isCorrect ? 'bg-emerald-50 border-emerald-200' : 'bg-rose-50 border-rose-200'}`;
-        item.innerHTML = `
-          <div><b>No. ${ans.num} [${ans.type}]:</b> ${ans.isCorrect ? '<span class="text-emerald-700 font-bold">Benar (+4)</span>' : '<span class="text-rose-600 font-bold">Kurang Tepat</span>'}</div>
-          <div class="text-gray-600">Jawaban Siswa: "<i>${ans.user}</i>"</div>
-          <div class="text-gray-800">Kunci: <b>${ans.correctKey}</b></div>
-        `;
-        summaryContainer.appendChild(item);
-      });
+        // ==========================================
+        // FLASHCARD & STUDY MODULE CONTROLLER
+        // ==========================================
+        function openStudyMode() {
+            playSound('click');
+            document.getElementById('welcomeScreen').classList.add('hidden');
+            document.getElementById('studyScreen').classList.remove('hidden');
+            switchStudyTab(1);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
 
-      confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
-    }
-  </script>
+        function switchStudyTab(babNum) {
+            playSound('click');
+            const tab1 = document.getElementById('tabBab1');
+            const tab2 = document.getElementById('tabBab2');
+            const contentArea = document.getElementById('studyContentArea');
+
+            if (babNum === 1) {
+                tab1.className = "flex-1 py-2.5 px-4 rounded-xl font-fredoka text-sm font-bold bg-blue-600 text-white shadow border-b-4 border-blue-800 transition";
+                tab2.className = "flex-1 py-2.5 px-4 rounded-xl font-fredoka text-sm font-bold bg-slate-100 text-slate-600 hover:bg-blue-50 border border-slate-200 transition";
+                
+                contentArea.innerHTML = `
+                    <div class="bg-blue-50 p-4 rounded-2xl border border-blue-200">
+                        <h4 class="font-fredoka text-base text-blue-900 font-bold mb-2">1. Pengertian & Hukum Beriman</h4>
+                        <p class="text-xs text-slate-700 leading-relaxed">Iman artinya meyakini sepenuh hati bahwa Allah menurunkan kitab sebagai pedoman hidup. Hukum mengimaninya adalah <strong class="text-blue-800">Wajib / Fardhu 'Ain</strong>. Merupakan <strong class="text-blue-800">Rukun Iman ke-3</strong>.</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        <div class="bg-emerald-50 p-3.5 rounded-2xl border border-emerald-200">
+                            <span class="text-xs font-bold bg-emerald-200 text-emerald-900 px-2 py-0.5 rounded">Taurat</span>
+                            <p class="text-xs text-slate-700 mt-1.5">Diturunkan kepada <strong>Nabi Musa a.s.</strong> (Bahasa Ibrani). Berisi 10 larangan pokok (dilarang menyembah berhala, membunuh, mencuri, dll).</p>
+                        </div>
+                        <div class="bg-amber-50 p-3.5 rounded-2xl border border-amber-200">
+                            <span class="text-xs font-bold bg-amber-200 text-amber-900 px-2 py-0.5 rounded">Zabur</span>
+                            <p class="text-xs text-slate-700 mt-1.5">Diturunkan kepada <strong>Nabi Daud a.s.</strong> untuk kaum Bani Israil sebagai petunjuk dan zikir puji-pujian.</p>
+                        </div>
+                        <div class="bg-purple-50 p-3.5 rounded-2xl border border-purple-200">
+                            <span class="text-xs font-bold bg-purple-200 text-purple-900 px-2 py-0.5 rounded">Injil</span>
+                            <p class="text-xs text-slate-700 mt-1.5">Diturunkan kepada <strong>Nabi Isa a.s.</strong> memuat ajaran tauhid dan membenarkan kitab sebelumnya.</p>
+                        </div>
+                        <div class="bg-teal-50 p-3.5 rounded-2xl border border-teal-200">
+                            <span class="text-xs font-bold bg-teal-200 text-teal-900 px-2 py-0.5 rounded">Al-Qur'an</span>
+                            <p class="text-xs text-slate-700 mt-1.5">Diturunkan kepada <strong>Nabi Muhammad SAW</strong> (Bahasa Arab, 30 Juz). Berfungsi sebagai <em>Hudan</em> (Petunjuk) & <em>Al-Furqan</em> (Pembeda).</p>
+                        </div>
+                    </div>
+                `;
+            } else {
+                tab2.className = "flex-1 py-2.5 px-4 rounded-xl font-fredoka text-sm font-bold bg-blue-600 text-white shadow border-b-4 border-blue-800 transition";
+                tab1.className = "flex-1 py-2.5 px-4 rounded-xl font-fredoka text-sm font-bold bg-slate-100 text-slate-600 hover:bg-blue-50 border border-slate-200 transition";
+
+                contentArea.innerHTML = `
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        <div class="bg-emerald-50 p-4 rounded-2xl border border-emerald-200">
+                            <h4 class="font-fredoka text-base text-emerald-900 font-bold mb-1">Subhanallah (Tasbih)</h4>
+                            <p class="text-xs text-slate-700 mb-2">Artinya: <strong>"Maha Suci Allah"</strong></p>
+                            <span class="text-[11px] font-bold block text-emerald-800 mb-1">Waktu Pengucapan:</span>
+                            <ul class="text-xs text-slate-600 list-disc pl-4 space-y-0.5">
+                                <li>Melihat hal menakjubkan / indah</li>
+                                <li>Melihat keburukan / kesalahan</li>
+                                <li>Dzikir shalat fardhu (33x)</li>
+                                <li>Mengingatkan imam shalat laki-laki</li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-amber-50 p-4 rounded-2xl border border-amber-200">
+                            <h4 class="font-fredoka text-base text-amber-900 font-bold mb-1">Allahu Akbar (Takbir)</h4>
+                            <p class="text-xs text-slate-700 mb-2">Artinya: <strong>"Allah Maha Besar"</strong></p>
+                            <span class="text-[11px] font-bold block text-amber-800 mb-1">Waktu Pengucapan:</span>
+                            <ul class="text-xs text-slate-600 list-disc pl-4 space-y-0.5">
+                                <li>Panggilan Azan & Iqamah</li>
+                                <li>Perpindahan gerakan shalat</li>
+                                <li>Malam takbiran Hari Raya Idul Fitri / Adha</li>
+                                <li>Melihat keagungan alam ciptaan Allah</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="bg-teal-50 p-3.5 rounded-2xl border border-teal-200">
+                        <h4 class="font-fredoka text-sm text-teal-900 font-bold mb-1"><i class="fa-solid fa-heart mr-1"></i> Manfaat Mengucapkan Kalimat Tayyibah</h4>
+                        <p class="text-xs text-slate-700">Mendapat pahala, menenangkan hati, menghapus dosa-dosa kecil, serta mengikis sifat <strong>Sombong / Takabur</strong>.</p>
+                    </div>
+                `;
+            }
+        }
+
+        // ==========================================
+        // MINI GAME MATCHING PAIRS CONTROLLER
+        // ==========================================
+        let selectedLeft = null;
+        let matchPairs = [
+            { left: "Kitab Taurat", right: "Nabi Musa a.s." },
+            { left: "Kitab Zabur", right: "Nabi Daud a.s." },
+            { left: "Kitab Injil", right: "Nabi Isa a.s." },
+            { left: "Kitab Al-Qur'an", right: "Nabi Muhammad SAW" },
+            { left: "Subhanallah", right: "Maha Suci Allah" },
+            { left: "Allahu Akbar", right: "Allah Maha Besar" }
+        ];
+        let solvedMatches = 0;
+
+        function openMatchingGame() {
+            playSound('click');
+            document.getElementById('welcomeScreen').classList.add('hidden');
+            document.getElementById('matchGameScreen').classList.remove('hidden');
+            initMatchingGame();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function initMatchingGame() {
+            selectedLeft = null;
+            solvedMatches = 0;
+            document.getElementById('matchFeedback').className = "hidden";
+
+            // Shuffle rights
+            const rights = matchPairs.map(p => p.right).sort(() => Math.random() - 0.5);
+
+            const leftCol = document.getElementById('matchLeftCol');
+            const rightCol = document.getElementById('matchRightCol');
+
+            leftCol.innerHTML = '';
+            rightCol.innerHTML = '';
+
+            matchPairs.forEach((pair, idx) => {
+                const btnL = document.createElement('button');
+                btnL.className = "w-full p-3 rounded-xl border-2 border-amber-200 bg-amber-50 hover:bg-amber-100 text-xs font-bold text-amber-950 text-left transition match-l-btn shadow-sm";
+                btnL.innerText = pair.left;
+                btnL.onclick = () => selectLeftMatch(btnL, pair.left);
+                leftCol.appendChild(btnL);
+            });
+
+            rights.forEach((rightText) => {
+                const btnR = document.createElement('button');
+                btnR.className = "w-full p-3 rounded-xl border-2 border-slate-200 bg-slate-50 hover:bg-slate-100 text-xs font-bold text-slate-800 text-left transition match-r-btn shadow-sm";
+                btnR.innerText = rightText;
+                btnR.onclick = () => selectRightMatch(btnR, rightText);
+                rightCol.appendChild(btnR);
+            });
+        }
+
+        function selectLeftMatch(btn, text) {
+            playSound('click');
+            document.querySelectorAll('.match-l-btn').forEach(b => b.classList.remove('ring-4', 'ring-amber-400', 'bg-amber-200'));
+            btn.classList.add('ring-4', 'ring-amber-400', 'bg-amber-200');
+            selectedLeft = { btn: btn, text: text };
+        }
+
+        function selectRightMatch(btnR, textR) {
+            if (!selectedLeft) {
+                alert('Klik item di sebelah kiri terlebih dahulu!');
+                return;
+            }
+
+            const matchObj = matchPairs.find(p => p.left === selectedLeft.text);
+            if (matchObj && matchObj.right === textR) {
+                playSound('correct');
+                selectedLeft.btn.className = "w-full p-3 rounded-xl border-2 border-emerald-500 bg-emerald-100 text-emerald-900 text-xs font-bold text-left opacity-60 cursor-default shadow-sm";
+                btnR.className = "w-full p-3 rounded-xl border-2 border-emerald-500 bg-emerald-100 text-emerald-900 text-xs font-bold text-left opacity-60 cursor-default shadow-sm";
+                selectedLeft.btn.onclick = null;
+                btnR.onclick = null;
+                selectedLeft = null;
+                solvedMatches++;
+
+                if (solvedMatches === matchPairs.length) {
+                    const fb = document.getElementById('matchFeedback');
+                    fb.innerText = "Selamat! Kamu Berhasil Memasangkan Semua Jawaban dengan Tepat! 🎉";
+                    fb.className = "p-3 rounded-xl text-center text-xs font-bold mb-4 bg-emerald-100 text-emerald-900 border border-emerald-300 block pop-in";
+                    if (typeof confetti === 'function') confetti({ particleCount: 80, spread: 60 });
+                }
+            } else {
+                playSound('wrong');
+                btnR.classList.add('border-rose-400', 'bg-rose-100');
+                setTimeout(() => {
+                    btnR.classList.remove('border-rose-400', 'bg-rose-100');
+                }, 600);
+            }
+        }
+
+        // ==========================================
+        // QUIZ GAME CONTROLLER
+        // ==========================================
+        function startQuizMode() {
+            updatePlayerName();
+            currentStageIndex = 0;
+            score = 0;
+            userAnswers = [];
+            document.getElementById('displayScore').innerText = score;
+
+            document.getElementById('welcomeScreen').classList.add('hidden');
+            document.getElementById('studyScreen').classList.add('hidden');
+            document.getElementById('matchGameScreen').classList.add('hidden');
+            document.getElementById('progressBarContainer').classList.remove('hidden');
+
+            playSound('click');
+            loadStage(currentStageIndex);
+        }
+
+        function updateProgressBar() {
+            const total = gameData.length;
+            const current = currentStageIndex + 1;
+            const percentage = (current / total) * 100;
+            const data = gameData[currentStageIndex];
+            
+            document.getElementById('progressBar').style.width = `${percentage}%`;
+            document.getElementById('stageCounter').innerText = `Soal ${current} dari ${total}`;
+            document.getElementById('chapterBadge').innerText = data.bab;
+            document.getElementById('typeBadge').innerText = data.typeLabel;
+
+            const typePill = document.getElementById('typeBadge');
+            if (data.type === 'mc') {
+                typePill.className = "bg-emerald-100 text-emerald-800 px-3 py-0.5 rounded-full border border-emerald-300";
+            } else if (data.type === 'fill') {
+                typePill.className = "bg-blue-100 text-blue-800 px-3 py-0.5 rounded-full border border-blue-300";
+            } else {
+                typePill.className = "bg-amber-100 text-amber-800 px-3 py-0.5 rounded-full border border-amber-300";
+            }
+        }
+
+        function loadStage(index) {
+            updateProgressBar();
+            const data = gameData[index];
+
+            document.getElementById('readingTitle').innerText = data.title;
+            document.getElementById('readingContent').innerHTML = data.reading;
+            document.getElementById('readingHighlight').innerText = data.highlight;
+
+            document.getElementById('questionScreen').classList.add('hidden');
+            document.getElementById('resultScreen').classList.add('hidden');
+            document.getElementById('readingScreen').classList.remove('hidden');
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function transitionToQuestion() {
+            playSound('click');
+            const data = gameData[currentStageIndex];
+
+            document.getElementById('questionText').innerText = data.question;
+
+            const mcContainer = document.getElementById('mcContainer');
+            const fillContainer = document.getElementById('fillContainer');
+            const essayContainer = document.getElementById('essayContainer');
+            const questionTypePill = document.getElementById('questionTypePill');
+
+            mcContainer.classList.add('hidden');
+            fillContainer.classList.add('hidden');
+            essayContainer.classList.add('hidden');
+
+            if (data.type === 'mc') {
+                questionTypePill.innerHTML = '<i class="fa-solid fa-list-ul mr-1"></i> Pilihan Ganda (Otomatis)';
+                mcContainer.classList.remove('hidden');
+                mcContainer.innerHTML = '';
+
+                data.options.forEach((optText, optIdx) => {
+                    const btn = document.createElement('button');
+                    btn.className = 'w-full text-left p-4 rounded-2xl border-2 border-slate-200 bg-slate-50 hover:bg-emerald-50 hover:border-emerald-400 font-semibold text-slate-800 transition transform active:scale-98 flex items-center space-x-3 text-sm md:text-base shadow-sm';
+                    btn.onclick = () => checkMcAnswer(optIdx);
+
+                    const optionLetter = String.fromCharCode(65 + optIdx);
+                    btn.innerHTML = `
+                        <span class="w-8 h-8 rounded-xl bg-emerald-200 text-emerald-900 font-fredoka font-bold flex items-center justify-center text-sm flex-shrink-0">${optionLetter}</span>
+                        <span class="flex-grow">${optText}</span>
+                    `;
+                    mcContainer.appendChild(btn);
+                });
+
+            } else if (data.type === 'fill') {
+                questionTypePill.innerHTML = '<i class="fa-solid fa-pen-clip mr-1"></i> Isian Singkat (Dinilai Guru)';
+                fillContainer.classList.remove('hidden');
+                document.getElementById('shortAnswerInput').value = '';
+                document.getElementById('shortAnswerInput').disabled = false;
+                document.getElementById('submitFillBtn').disabled = false;
+                document.getElementById('submitFillBtn').classList.remove('hidden');
+
+            } else if (data.type === 'essay') {
+                questionTypePill.innerHTML = '<i class="fa-solid fa-file-pen mr-1"></i> Uraian / Essay (Dinilai Guru)';
+                essayContainer.classList.remove('hidden');
+                document.getElementById('essayAnswerInput').value = '';
+                document.getElementById('essayAnswerInput').disabled = false;
+                document.getElementById('submitEssayBtn').disabled = false;
+                document.getElementById('submitEssayBtn').classList.remove('hidden');
+            }
+
+            document.getElementById('feedbackPanel').classList.add('hidden');
+            document.getElementById('nextBtn').classList.add('hidden');
+
+            document.getElementById('readingScreen').classList.add('hidden');
+            document.getElementById('questionScreen').classList.remove('hidden');
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function showReadingAgain() {
+            playSound('click');
+            document.getElementById('questionScreen').classList.add('hidden');
+            document.getElementById('readingScreen').classList.remove('hidden');
+        }
+
+        function checkMcAnswer(selectedOptIdx) {
+            const data = gameData[currentStageIndex];
+            const isCorrect = (selectedOptIdx === data.correctIndex);
+
+            userAnswers[currentStageIndex] = {
+                type: 'mc',
+                question: data.question,
+                userChoice: data.options[selectedOptIdx],
+                correctChoice: data.options[data.correctIndex],
+                isCorrect: isCorrect,
+                status: isCorrect ? 'correct' : 'wrong',
+                explanation: data.explanation,
+                scoreEarned: isCorrect ? 10 : 0
+            };
+
+            const optionsBtns = document.getElementById('mcContainer').children;
+            for (let i = 0; i < optionsBtns.length; i++) {
+                optionsBtns[i].disabled = true;
+                optionsBtns[i].classList.remove('hover:bg-emerald-50', 'hover:border-emerald-400');
+            }
+
+            if (isCorrect) {
+                optionsBtns[selectedOptIdx].classList.remove('bg-slate-50', 'border-slate-200');
+                optionsBtns[selectedOptIdx].classList.add('bg-emerald-100', 'border-emerald-500', 'text-emerald-900');
+                score += 10;
+                document.getElementById('displayScore').innerText = score;
+                playSound('correct');
+            } else {
+                optionsBtns[selectedOptIdx].classList.remove('bg-slate-50', 'border-slate-200');
+                optionsBtns[selectedOptIdx].classList.add('bg-rose-100', 'border-rose-400', 'text-rose-900');
+                optionsBtns[data.correctIndex].classList.remove('bg-slate-50', 'border-slate-200');
+                optionsBtns[data.correctIndex].classList.add('bg-emerald-100', 'border-emerald-500', 'text-emerald-900');
+                playSound('wrong');
+            }
+
+            showFeedback(isCorrect ? 'correct' : 'wrong', isCorrect ? 'Jawaban Kamu Tepat Sekali! 🌟' : 'Jawaban Belum Tepat', data.explanation);
+        }
+
+        function checkShortAnswer() {
+            const data = gameData[currentStageIndex];
+            const rawVal = document.getElementById('shortAnswerInput').value.trim();
+            if (rawVal === '') {
+                alert('Ketikkan jawaban kamu terlebih dahulu!');
+                return;
+            }
+
+            document.getElementById('shortAnswerInput').disabled = true;
+            document.getElementById('submitFillBtn').disabled = true;
+            document.getElementById('submitFillBtn').classList.add('hidden');
+
+            userAnswers[currentStageIndex] = {
+                type: 'fill',
+                question: data.question,
+                userChoice: rawVal,
+                correctChoice: data.correctAnswers[0],
+                status: 'pending',
+                explanation: data.explanation
+            };
+
+            playSound('click');
+
+            const contentHtml = `
+                <p class="mb-2"><strong>Jawaban Kamu:</strong> "${rawVal}"</p>
+                <div class="p-2.5 bg-blue-100 text-blue-950 rounded-xl border border-blue-300 text-xs font-semibold mb-2">
+                    <i class="fa-solid fa-clock-rotate-left mr-1 text-blue-600"></i> Status: Jawaban Tersimpan (Akan Diperiksa Guru)
+                </div>
+                <div class="text-xs text-slate-700 bg-white/80 p-2.5 rounded-lg border border-slate-200">
+                    <strong class="block text-slate-900 mb-0.5">Kunci Jawaban Acuan:</strong>
+                    <span class="font-bold text-emerald-700">${data.correctAnswers[0].toUpperCase()}</span> — <span class="italic text-slate-600">${data.explanation}</span>
+                </div>
+            `;
+
+            showFeedback('pending', 'Jawaban Isian Berhasil Disimpan! 📝', contentHtml);
+        }
+
+        function checkEssayAnswer() {
+            const data = gameData[currentStageIndex];
+            const rawVal = document.getElementById('essayAnswerInput').value.trim();
+            if (rawVal === '') {
+                alert('Tuliskan jawaban uraian kamu terlebih dahulu!');
+                return;
+            }
+
+            document.getElementById('essayAnswerInput').disabled = true;
+            document.getElementById('submitEssayBtn').disabled = true;
+            document.getElementById('submitEssayBtn').classList.add('hidden');
+
+            userAnswers[currentStageIndex] = {
+                type: 'essay',
+                question: data.question,
+                userChoice: rawVal,
+                correctChoice: data.sampleAnswer,
+                status: 'pending',
+                explanation: data.explanation
+            };
+
+            playSound('click');
+
+            const htmlFeedback = `
+                <p class="mb-2"><strong>Jawaban Kamu:</strong> "${rawVal}"</p>
+                <div class="p-2.5 bg-blue-100 text-blue-950 rounded-xl border border-blue-300 text-xs font-semibold mb-2">
+                    <i class="fa-solid fa-clock-rotate-left mr-1 text-blue-600"></i> Status: Jawaban Uraian Tersimpan (Akan Dinilai Guru)
+                </div>
+                <div class="text-xs bg-white/80 p-2.5 rounded-lg border border-slate-200">
+                    <strong class="block text-slate-900 mb-1">Acuan Pembahasan Guru:</strong>
+                    <p class="whitespace-pre-line text-slate-700 leading-relaxed">${data.explanation}</p>
+                </div>
+            `;
+
+            showFeedback('pending', 'Jawaban Uraian Berhasil Disimpan! 📝', htmlFeedback);
+        }
+
+        function showFeedback(statusType, title, contentHtml) {
+            const feedbackPanel = document.getElementById('feedbackPanel');
+            const feedbackIcon = document.getElementById('feedbackIcon');
+            const feedbackTitle = document.getElementById('feedbackTitle');
+            const feedbackText = document.getElementById('feedbackText');
+
+            feedbackPanel.classList.remove('hidden', 'bg-emerald-50', 'border-emerald-200', 'bg-rose-50', 'border-rose-200', 'bg-blue-50', 'border-blue-200', 'text-emerald-900', 'text-rose-900', 'text-blue-900');
+            
+            if (statusType === 'correct') {
+                feedbackPanel.classList.add('bg-emerald-50', 'border', 'border-emerald-200', 'text-emerald-900');
+                feedbackIcon.innerHTML = '<i class="fa-solid fa-circle-check text-emerald-600"></i>';
+            } else if (statusType === 'wrong') {
+                feedbackPanel.classList.add('bg-rose-50', 'border', 'border-rose-200', 'text-rose-900');
+                feedbackIcon.innerHTML = '<i class="fa-solid fa-circle-xmark text-rose-500"></i>';
+            } else {
+                feedbackPanel.classList.add('bg-blue-50', 'border', 'border-blue-200', 'text-blue-900');
+                feedbackIcon.innerHTML = '<i class="fa-solid fa-file-circle-check text-blue-600"></i>';
+            }
+
+            feedbackTitle.innerText = title;
+            feedbackText.innerHTML = contentHtml;
+
+            document.getElementById('nextBtn').classList.remove('hidden');
+        }
+
+        function nextStage() {
+            playSound('click');
+            currentStageIndex++;
+            if (currentStageIndex < gameData.length) {
+                loadStage(currentStageIndex);
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            document.getElementById('questionScreen').classList.add('hidden');
+            document.getElementById('readingScreen').classList.add('hidden');
+            document.getElementById('progressBarContainer').classList.add('hidden');
+            document.getElementById('resultScreen').classList.remove('hidden');
+
+            const mcAnswers = userAnswers.filter(a => a.type === 'mc');
+            const correctMc = mcAnswers.filter(a => a.status === 'correct').length;
+            const finalScorePG = score;
+
+            document.getElementById('finalScoreDisplay').innerText = finalScorePG;
+            document.getElementById('certScore').innerText = finalScorePG;
+            document.getElementById('correctMcCount').innerText = `${correctMc} / 10 Soal (${finalScorePG} Poin)`;
+
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('certDate').innerText = today;
+
+            const predicateEl = document.getElementById('gradePredicate');
+
+            if (finalScorePG >= 80) {
+                predicateEl.innerText = "Hasil PG: Sangat Memuaskan (Mumtaz) ⭐⭐⭐";
+                predicateEl.className = "inline-block bg-emerald-100 text-emerald-800 text-xs md:text-sm font-bold px-4 py-1.5 rounded-full mb-4 border border-emerald-300";
+            } else if (finalScorePG >= 60) {
+                predicateEl.innerText = "Hasil PG: Baik (Jayyid) ⭐⭐";
+                predicateEl.className = "inline-block bg-amber-100 text-amber-800 text-xs md:text-sm font-bold px-4 py-1.5 rounded-full mb-4 border border-amber-300";
+            } else {
+                predicateEl.innerText = "Hasil PG: Perlu Belajar Lagi (Cukup) ⭐";
+                predicateEl.className = "inline-block bg-rose-100 text-rose-800 text-xs md:text-sm font-bold px-4 py-1.5 rounded-full mb-4 border border-rose-300";
+            }
+
+            const reviewContainer = document.getElementById('reviewContainer');
+            reviewContainer.innerHTML = '';
+
+            userAnswers.forEach((ans, idx) => {
+                const item = document.createElement('div');
+                
+                if (ans.type === 'mc') {
+                    const isGood = ans.status === 'correct';
+                    item.className = `p-3.5 rounded-xl border text-xs md:text-sm text-left ${isGood ? 'bg-emerald-50/70 border-emerald-200' : 'bg-rose-50/70 border-rose-200'}`;
+                    item.innerHTML = `
+                        <div class="flex items-center justify-between mb-1">
+                            <span class="font-bold text-slate-800">Soal #${idx + 1} <span class="text-[10px] bg-slate-200 text-slate-700 px-1.5 py-0.5 rounded ml-1">PG</span></span>
+                            <span class="font-bold ${isGood ? 'text-emerald-600' : 'text-rose-600'}">
+                                ${isGood ? 'Benar (+10 Poin)' : 'Salah (0 Poin)'}
+                            </span>
+                        </div>
+                        <p class="font-semibold text-slate-700 mb-1.5">${ans.question}</p>
+                        <div class="text-xs space-y-0.5">
+                            <p class="text-slate-600">Jawaban Kamu: <strong class="${isGood ? 'text-emerald-700' : 'text-rose-700'}">${ans.userChoice}</strong></p>
+                            <p class="text-slate-500 italic mt-1">${ans.explanation}</p>
+                        </div>
+                    `;
+                } else {
+                    const typeBadge = ans.type === 'fill' ? 'Isian' : 'Essay';
+                    item.className = 'p-3.5 rounded-xl border border-blue-200 bg-blue-50/60 text-xs md:text-sm text-left';
+                    item.innerHTML = `
+                        <div class="flex items-center justify-between mb-1">
+                            <span class="font-bold text-slate-800">Soal #${idx + 1} <span class="text-[10px] bg-blue-200 text-blue-800 px-1.5 py-0.5 rounded ml-1">${typeBadge}</span></span>
+                            <span class="font-bold text-blue-700 text-xs bg-blue-100 px-2 py-0.5 rounded-full border border-blue-300">
+                                <i class="fa-solid fa-clock mr-1"></i> Menunggu Penilaian Guru
+                            </span>
+                        </div>
+                        <p class="font-semibold text-slate-700 mb-1.5">${ans.question}</p>
+                        <div class="text-xs space-y-1">
+                            <p class="text-slate-800 bg-white/80 p-2 rounded border border-slate-200">Jawaban Siswa: <strong>"${ans.userChoice}"</strong></p>
+                            <p class="text-slate-500 italic mt-1">Acuan Pembahasan: ${ans.explanation}</p>
+                        </div>
+                    `;
+                }
+                
+                reviewContainer.appendChild(item);
+            });
+
+            if (typeof confetti === 'function' && finalScorePG >= 70) {
+                confetti({
+                    particleCount: 120,
+                    spread: 80,
+                    origin: { y: 0.6 }
+                });
+            }
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function toggleReviewList() {
+            playSound('click');
+            const reviewContainer = document.getElementById('reviewContainer');
+            const chevron = document.getElementById('reviewChevron');
+            if (reviewContainer.classList.contains('hidden')) {
+                reviewContainer.classList.remove('hidden');
+                chevron.className = 'fa-solid fa-chevron-up';
+            } else {
+                reviewContainer.classList.add('hidden');
+                chevron.className = 'fa-solid fa-chevron-down';
+            }
+        }
+    </script>
 </body>
 </html>
